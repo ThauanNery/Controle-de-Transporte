@@ -1,9 +1,7 @@
 ﻿using Controle_de_Transporte.Models;
 using Controle_de_Transporte.Repository.Interface;
 using Controle_de_Transporte.Service.Interface;
-using System;
 using System.Net;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Controle_de_Transporte.Service
 {

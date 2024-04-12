@@ -1,9 +1,10 @@
 ﻿using Controle_de_Transporte.Data;
 using Controle_de_Transporte.Repository;
 using Controle_de_Transporte.Repository.Interface;
+using Controle_de_Transporte.Service;
+using Controle_de_Transporte.Service.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using System.Configuration;
 
 namespace Controle_de_Transporte
 {
@@ -12,7 +13,7 @@ namespace Controle_de_Transporte
        
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+           
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer("MyDatabase"));
             services.AddSwaggerGen(c =>
@@ -23,9 +24,11 @@ namespace Controle_de_Transporte
                     Version = "v1",
                 });
             });
+            services.AddControllersWithViews();
 
             // Adicionar serviços customizados
             services.AddScoped<IInstituicaoRepository, InstituicaoRepository>();
+            services.AddScoped<IInstituicaoService, InstituicaoService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
