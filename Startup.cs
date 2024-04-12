@@ -1,11 +1,14 @@
 ﻿using Controle_de_Transporte.Data;
 using Controle_de_Transporte.Repository;
 using Controle_de_Transporte.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 namespace Controle_de_Transporte
 {
     public class Startup
     {       
+       
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
