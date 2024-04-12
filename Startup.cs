@@ -2,6 +2,7 @@
 using Controle_de_Transporte.Repository;
 using Controle_de_Transporte.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using System.Configuration;
 
 namespace Controle_de_Transporte
@@ -14,6 +15,14 @@ namespace Controle_de_Transporte
             services.AddControllersWithViews();
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer("MyDatabase"));
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Thauan .NET CORE",
+                    Version = "v1",
+                });
+            });
 
             // Adicionar serviços customizados
             services.AddScoped<IInstituicaoRepository, InstituicaoRepository>();
@@ -24,6 +33,8 @@ namespace Controle_de_Transporte
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Thauan .NET CORE v1"));
             }
             else
             {
