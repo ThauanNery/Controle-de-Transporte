@@ -1,3 +1,12 @@
+using Controle_de_Transporte.Data;
+using Controle_de_Transporte.Repository.Interface;
+using Controle_de_Transporte.Repository;
+using Controle_de_Transporte.Service.Interface;
+using Controle_de_Transporte.Service;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Identity;
+
 namespace Controle_de_Transporte
 {
     public class Program
@@ -11,7 +20,59 @@ namespace Controle_de_Transporte
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder
+                        .ConfigureServices((context, services) =>
+                        {
+
+                            services.AddDbContext<Context>(options =>
+                                options.UseSqlServer("MyDatabase"));
+                            services.AddCors(options =>
+                            {
+                                options.AddPolicy("AllowSwagger",
+                                    builder =>
+                                    {
+                                        builder.AllowAnyOrigin()
+                                            .AllowAnyMethod()
+                                            .AllowAnyHeader();
+                                    });
+                            });
+                            services.AddSwaggerGen(c =>
+                            {
+                                c.SwaggerDoc("v1", new OpenApiInfo
+                                {
+                                    Title = "Thauan .NET CORE",
+                                    Version = "v1",
+                                });
+                            });
+                            // Configure services
+                            services.AddControllersWithViews();
+                            
+                            services.AddScoped<IInstituicaoRepository, InstituicaoRepository>();
+                            services.AddTransient<IInstituicaoService, InstituicaoService>();
+                        
+
+                        })
+                        .Configure((app) =>
+                        {
+                            app.UseDeveloperExceptionPage();
+                            app.UseSwagger();
+                            app.UseSwaggerUI(c =>
+                            {
+                                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Minha API V1");
+                            });
+                            app.UseHttpsRedirection();
+                            app.UseStaticFiles();
+                            app.UseRouting();
+                            app.UseAuthentication();
+                            app.UseAuthorization();
+                            app.UseEndpoints(endpoints =>
+                            {
+                                endpoints.MapControllerRoute(
+                                    name: "default",
+                                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                            });
+                        });
                 });
     }
 }
+

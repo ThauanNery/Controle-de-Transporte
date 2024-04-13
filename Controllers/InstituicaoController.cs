@@ -1,5 +1,7 @@
-﻿using Controle_de_Transporte.Models;
+﻿using Controle_de_Transporte.Data;
+using Controle_de_Transporte.Models;
 using Controle_de_Transporte.Service;
+using Controle_de_Transporte.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -7,10 +9,10 @@ namespace Controle_de_Transporte.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class InstituicaoController : ControllerBase
+    public class InstituicaoController : Controller
     {
-        private readonly InstituicaoService _instituicaoService;
-        public InstituicaoController(InstituicaoService instituicaoService)
+        private readonly IInstituicaoService _instituicaoService;
+        public InstituicaoController(IInstituicaoService instituicaoService)
         {
             _instituicaoService = instituicaoService;
         }
@@ -25,7 +27,7 @@ namespace Controle_de_Transporte.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, null);
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
             }
         }
 
