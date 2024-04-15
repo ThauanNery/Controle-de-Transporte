@@ -2,6 +2,7 @@
 using Controle_de_Transporte.Repository.Interface;
 using Controle_de_Transporte.Service.Interface;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Controle_de_Transporte.Service
 {
@@ -14,32 +15,30 @@ namespace Controle_de_Transporte.Service
             _repository = repository;
         }
 
-        public TipoDeTransporteModel GetById(int id)
+        public async Task<TipoDeTransporteModel> GetByIdAsync(int id)
         {
             var statusHttp = HttpStatusCode.NotFound;
             try
             {
-                var repositorio = _repository.GetById(id);
-                if (repositorio != null)
+                var tpTransporte = await _repository.GetByIdAsync(id);
+                if (tpTransporte != null)
                 {
                     statusHttp = HttpStatusCode.OK;
-                    
                 }
-                return repositorio;
+                return tpTransporte;
             }
             catch (Exception ex)
             {
-
                 string errorMessage = "Ocorreu um erro ao buscar o Tipo de Transporte por Id.";
                 throw new Exception(errorMessage, ex);
             }
         }
 
-        public List<TipoDeTransporteModel> GetAll()
+        public async Task<List<TipoDeTransporteModel>> GetAllAsync()
         {
             try
             {
-                return _repository.GetAll();
+                return await _repository.GetAllAsync();
             }
             catch (Exception ex)
             {
@@ -52,8 +51,7 @@ namespace Controle_de_Transporte.Service
         {
             try
             {
-               
-                await _repository.createAsync(tpTransporte);
+                await _repository.CreateAsync(tpTransporte);
                 return tpTransporte;
             }
             catch (Exception ex)
@@ -63,12 +61,12 @@ namespace Controle_de_Transporte.Service
             }
         }
 
-        public TipoDeTransporteModel Update(TipoDeTransporteModel instituicao)
+        public async Task<TipoDeTransporteModel> UpdateAsync(TipoDeTransporteModel tpTransporte)
         {
             try
             {
-                    _repository.update(instituicao);
-                    return instituicao;
+                await _repository.UpdateAsync(tpTransporte);
+                return tpTransporte;
 
             }
             catch (Exception ex)
@@ -78,13 +76,12 @@ namespace Controle_de_Transporte.Service
             }
         }
 
-        public TipoDeTransporteModel Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var statusHttp = HttpStatusCode.NoContent;
             try
             {
-                _repository.deleteById(id);
-                return null;
+                await _repository.DeleteByIdAsync(id);
+                return true;
             }
             catch (Exception ex)
             {
@@ -92,6 +89,5 @@ namespace Controle_de_Transporte.Service
                 throw new Exception(errorMessage, ex);
             }
         }
-             
     }
 }

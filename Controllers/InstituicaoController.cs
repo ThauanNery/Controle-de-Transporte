@@ -1,5 +1,4 @@
-﻿using Controle_de_Transporte.Data;
-using Controle_de_Transporte.Models;
+﻿using Controle_de_Transporte.Models;
 using Controle_de_Transporte.Service;
 using Controle_de_Transporte.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -18,42 +17,78 @@ namespace Controle_de_Transporte.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
-           
-                var retorno = _instituicaoService.GetAll();
-                return StatusCode((int)HttpStatusCode.OK, retorno);
-           
+            try
+            {
+                var instituicoes = await _instituicaoService.GetAllAsync();
+                return Ok(instituicoes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var retorno = _instituicaoService.GetById(id);
-            return StatusCode((int)HttpStatusCode.OK, retorno);
+            try
+            {
+                var instituicao = await _instituicaoService.GetByIdAsync(id);
+                if (instituicao == null)
+                {
+                    return NotFound();
+                }
+                return Ok(instituicao);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(InstituicaoModel instituicao)
+        public async Task<IActionResult> CreateAsync(InstituicaoModel instituicao)
         {
+            try
+            {
                 var retorno = await _instituicaoService.AddAsync(instituicao);
                 return StatusCode((int)HttpStatusCode.Created, retorno);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
-        
         [HttpPut]
-        public IActionResult Update(InstituicaoModel instituicao)
+        public async Task<IActionResult> UpdateAsync(InstituicaoModel instituicao)
         {
-            var retorno = _instituicaoService.Update(instituicao);
-            return StatusCode((int)HttpStatusCode.OK, retorno);
+            try
+            {
+                await _instituicaoService.UpdateAsync(instituicao);
+                return Ok(instituicao);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
         [HttpDelete("{id:int}")]
-        public virtual IActionResult Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            var retorno = _instituicaoService.Delete(id);
-            return StatusCode((int)HttpStatusCode.OK, retorno);
+            try
+            {
+                await _instituicaoService.DeleteAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
     }

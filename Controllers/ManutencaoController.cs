@@ -2,6 +2,7 @@
 using Controle_de_Transporte.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Controle_de_Transporte.Controllers
 {
@@ -16,43 +17,79 @@ namespace Controle_de_Transporte.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
-
-            var retorno = _manutencaoService.GetAll();
-            return StatusCode((int)HttpStatusCode.OK, retorno);
-
+            try
+            {
+                var manutencoes = await _manutencaoService.GetAllAsync();
+                return Ok(manutencoes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
+            }
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var retorno = _manutencaoService.GetById(id);
-            return StatusCode((int)HttpStatusCode.OK, retorno);
+            try
+            {
+                var manutencao = await _manutencaoService.GetByIdAsync(id);
+                if (manutencao == null)
+                {
+                    return NotFound();
+                }
+                return Ok(manutencao);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
+            }
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(ManutencaoModel manutencao)
+        public async Task<IActionResult> CreateAsync(ManutencaoModel manutencao)
         {
-            var retorno = await _manutencaoService.AddAsync(manutencao);
-            return StatusCode((int)HttpStatusCode.Created, retorno);
+            try
+            {
+                var retorno = await _manutencaoService.AddAsync(manutencao);
+                return StatusCode((int)HttpStatusCode.Created, retorno);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
+            }
         }
 
 
         [HttpPut]
-        public IActionResult Update(ManutencaoModel manutencao)
+        public async Task<IActionResult> UpdateAsync(ManutencaoModel manutencao)
         {
-            var retorno = _manutencaoService.Update(manutencao);
-            return StatusCode((int)HttpStatusCode.OK, retorno);
+            try
+            {
+                await _manutencaoService.UpdateAsync(manutencao);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
+            }
         }
 
         [HttpDelete("{id:int}")]
-        public virtual IActionResult Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            var retorno = _manutencaoService.Delete(id);
-            return StatusCode((int)HttpStatusCode.OK, retorno);
+            try
+            {
+                await _manutencaoService.DeleteAsync(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
+            }
         }
-
     }
 }

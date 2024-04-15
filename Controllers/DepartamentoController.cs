@@ -1,32 +1,33 @@
 ﻿using Controle_de_Transporte.Models;
+using Controle_de_Transporte.Service;
 using Controle_de_Transporte.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace Controle_de_Transporte.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class CargoController : ControllerBase
+    public class DepartamentoController : ControllerBase
     {
-        private readonly ICargoService _cargoService;
-        public CargoController(ICargoService cargoService)
+        private readonly IDepartamentoService _departamentoService;
+        public DepartamentoController(IDepartamentoService departamentoService)
         {
-            _cargoService = cargoService;
+            _departamentoService = departamentoService;
         }
+
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             try
             {
-                var cargos = await _cargoService.GetAllAsync();
-                return Ok(cargos);
+                var departamentos = await _departamentoService.GetAllAsync();
+                return Ok(departamentos);
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
+                return BadRequest(ex.Message);
             }
         }
 
@@ -35,46 +36,44 @@ namespace Controle_de_Transporte.Controllers
         {
             try
             {
-                var cargo = await _cargoService.GetByIdAsync(id);
-                if (cargo == null)
+                var departamento = await _departamentoService.GetByIdAsync(id);
+                if (departamento == null)
                 {
                     return NotFound();
                 }
-                return Ok(cargo);
+                return Ok(departamento);
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
+                return BadRequest(ex.Message);
             }
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(CargoModel cargo)
+        public async Task<IActionResult> CreateAsync(DepartamentoModel departamento)
         {
             try
             {
-                var retorno = await _cargoService.AddAsync(cargo);
+                var retorno = await _departamentoService.AddAsync(departamento);
                 return StatusCode((int)HttpStatusCode.Created, retorno);
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
+                return BadRequest(ex.Message);
             }
         }
 
-
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync(CargoModel cargo)
+        public async Task<IActionResult> UpdateAsync(DepartamentoModel departamento)
         {
             try
             {
-                await _cargoService.UpdateAsync(cargo);
+                await _departamentoService.UpdateAsync(departamento);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
+                return BadRequest(ex.Message);
             }
         }
 
@@ -83,12 +82,12 @@ namespace Controle_de_Transporte.Controllers
         {
             try
             {
-                await _cargoService.DeleteAsync(id);
+                await _departamentoService.DeleteAsync(id);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
+                return BadRequest(ex.Message);
             }
         }
     }

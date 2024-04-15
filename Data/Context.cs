@@ -21,6 +21,8 @@ namespace Controle_de_Transporte.Data
         public DbSet<ManutencaoModel> manutencaos { get; set; }
         public DbSet<TransporteModel> transportes { get; set; }
 
+      
+
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    // Leia a string de conexão do arquivo appsettings.json

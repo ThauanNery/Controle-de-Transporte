@@ -4,10 +4,11 @@ namespace Controle_de_Transporte.Repository.Interface
 {
     public interface IManutencaoRepository
     {
-        ManutencaoModel GetById(int id);
-        List<ManutencaoModel> GetAll();
-        Task<ManutencaoModel> createAsync(ManutencaoModel manutencao);
-        ManutencaoModel update(ManutencaoModel manutencao);
-        bool deleteById(int id);
+        Task<ManutencaoModel> GetByIdAsync(int id);
+        Task<List<ManutencaoModel>> GetAllAsync();
+        Task<ManutencaoModel> CreateAsync(ManutencaoModel manutencao);
+        Task<ManutencaoModel> UpdateAsync(ManutencaoModel manutencao);
+        Task<bool> DeleteByIdAsync(int id);
     }
+
 }

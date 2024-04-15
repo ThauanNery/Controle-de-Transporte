@@ -4,10 +4,11 @@ namespace Controle_de_Transporte.Service.Interface
 {
     public interface ICargoService
     {
-        CargoModel GetById(int id);
-        List<CargoModel> GetAll();
+        Task<CargoModel> GetByIdAsync(int id);
+        Task<List<CargoModel>> GetAllAsync();
         Task<CargoModel> AddAsync(CargoModel cargo);
-        CargoModel Update(CargoModel cargo);
-        CargoModel Delete(int id);
+        Task<CargoModel> UpdateAsync(CargoModel cargo);
+        Task<bool> DeleteAsync(int id);
     }
+
 }

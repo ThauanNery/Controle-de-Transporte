@@ -1,6 +1,7 @@
 ﻿using Controle_de_Transporte.Data;
 using Controle_de_Transporte.Models;
 using Controle_de_Transporte.Repository.Interface;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.EntityFrameworkCore;
 
 namespace Controle_de_Transporte.Repository
@@ -13,16 +14,17 @@ namespace Controle_de_Transporte.Repository
             _context = context;
         }
 
-        public InstituicaoModel GetById(int id)
+        public async Task<InstituicaoModel> GetByIdAsync(int id)
         {
-            return _context.Instituicaos.FirstOrDefault(x => x.Id == id);
+            return await _context.Instituicaos.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public List<InstituicaoModel> GetAll()
+        public async Task<List<InstituicaoModel>> GetAllAsync()
         {
-            return _context.Instituicaos.ToList();
+            return await _context.Instituicaos.ToListAsync();
         }
-        public async Task<InstituicaoModel> createAsync(InstituicaoModel instituicao)
+
+        public async Task<InstituicaoModel> CreateAsync(InstituicaoModel instituicao)
         {
             try
             {
@@ -35,28 +37,29 @@ namespace Controle_de_Transporte.Repository
                 throw new Exception("Erro ao salvar instituição no banco de dados.", ex);
             }
         }
-      
-        public InstituicaoModel update(InstituicaoModel instituicao)
+
+        public async Task<InstituicaoModel> UpdateAsync(InstituicaoModel instituicao)
         {
-            InstituicaoModel InstitucaoDb = GetById(instituicao.Id);
+            InstituicaoModel InstituicaoDb = await GetByIdAsync(instituicao.Id);
 
-            if (InstitucaoDb == null) throw new Exception("Houve um erro na atualização da Instituição!");
+            if (InstituicaoDb == null) throw new Exception("Houve um erro na atualização da Instituição!");
 
-            InstitucaoDb.NomeInstituicao = instituicao.NomeInstituicao;
-            InstitucaoDb.CNPJ = instituicao.CNPJ;           
+            InstituicaoDb.NomeInstituicao = instituicao.NomeInstituicao;
+            InstituicaoDb.CNPJ = instituicao.CNPJ;
 
-            _context.Instituicaos.Update(InstitucaoDb);
+            _context.Instituicaos.Update(InstituicaoDb);
             _context.SaveChanges();
 
-            return InstitucaoDb;
+            return InstituicaoDb;
         }
-        public bool deleteById(int id)
+
+        public async Task<bool> DeleteByIdAsync(int id)
         {
-            InstituicaoModel InstitucaoDb = GetById(id);
+            InstituicaoModel InstituicaoDb = await GetByIdAsync(id);
 
-            if (InstitucaoDb == null) throw new Exception("Houve um erro ao apagar a Instituição!");
+            if (InstituicaoDb == null) throw new Exception("Houve um erro ao apagar a Instituição!");
 
-            _context.Instituicaos.Remove(InstitucaoDb);
+            _context.Instituicaos.Remove(InstituicaoDb);
             _context.SaveChanges();
             return true;
         }

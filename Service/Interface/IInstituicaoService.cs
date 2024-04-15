@@ -4,10 +4,10 @@ namespace Controle_de_Transporte.Service.Interface
 {
     public interface IInstituicaoService
     {
-        InstituicaoModel GetById(int id);
-        List<InstituicaoModel> GetAll();
+        Task<InstituicaoModel> GetByIdAsync(int id);
+        Task<List<InstituicaoModel>> GetAllAsync();
         Task<InstituicaoModel> AddAsync(InstituicaoModel instituicao);
-        InstituicaoModel Update(InstituicaoModel instituicao);
-        InstituicaoModel Delete(int id);
+        Task<InstituicaoModel> UpdateAsync(InstituicaoModel instituicao);
+        Task<bool> DeleteAsync(int id);
     }
 }

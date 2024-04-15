@@ -2,6 +2,7 @@
 using Controle_de_Transporte.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Controle_de_Transporte.Controllers
 {
@@ -16,12 +17,12 @@ namespace Controle_de_Transporte.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
             try
             {
-                var retorno = _tpTransporteService.GetAll();
-                return StatusCode((int)HttpStatusCode.OK, retorno);
+                var transportes = await _tpTransporteService.GetAllAsync();
+                return Ok(transportes);
             }
             catch (Exception ex)
             {
@@ -30,20 +31,16 @@ namespace Controle_de_Transporte.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetById(int id)
-        {
-            var retorno = _tpTransporteService.GetById(id);
-            return StatusCode((int)HttpStatusCode.OK, retorno);
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> Create(TipoDeTransporteModel tpTransporte)
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
             try
             {
-                var retorno = await _tpTransporteService.AddAsync(tpTransporte);
-                return StatusCode((int)HttpStatusCode.Created, null);
+                var transporte = await _tpTransporteService.GetByIdAsync(id);
+                if (transporte == null)
+                {
+                    return NotFound();
+                }
+                return Ok(transporte);
             }
             catch (Exception ex)
             {
@@ -51,20 +48,47 @@ namespace Controle_de_Transporte.Controllers
             }
         }
 
-        
-        [HttpPut]
-        public IActionResult Update(TipoDeTransporteModel tpTransporte)
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync(TipoDeTransporteModel tpTransporte)
         {
-            var retorno = _tpTransporteService.Update(tpTransporte);
-            return StatusCode((int)HttpStatusCode.OK, null);
+            try
+            {
+                var retorno = await _tpTransporteService.AddAsync(tpTransporte);
+                return StatusCode((int)HttpStatusCode.Created, retorno);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync(TipoDeTransporteModel tpTransporte)
+        {
+            try
+            {
+                await _tpTransporteService.UpdateAsync(tpTransporte);
+                return Ok(tpTransporte);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
+            }
         }
 
         [HttpDelete("{id:int}")]
-        public virtual IActionResult Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            var retorno = _tpTransporteService.Delete(id);
-            return StatusCode((int)HttpStatusCode.OK, null);
+            try
+            {
+                await _tpTransporteService.DeleteAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
+            }
         }
-
     }
 }

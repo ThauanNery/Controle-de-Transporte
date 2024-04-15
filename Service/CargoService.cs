@@ -2,6 +2,7 @@
 using Controle_de_Transporte.Repository.Interface;
 using Controle_de_Transporte.Service.Interface;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Controle_de_Transporte.Service
 {
@@ -14,18 +15,17 @@ namespace Controle_de_Transporte.Service
             _repository = repository;
         }
 
-        public CargoModel GetById(int id)
+        public async Task<CargoModel> GetByIdAsync(int id)
         {
             var statusHttp = HttpStatusCode.NotFound;
             try
             {
-                var repositorio = _repository.GetById(id);
-                if (repositorio != null)
+                var cargo = await _repository.GetByIdAsync(id);
+                if (cargo != null)
                 {
                     statusHttp = HttpStatusCode.OK;
-
                 }
-                return repositorio;
+                return cargo;
             }
             catch (Exception ex)
             {
@@ -34,57 +34,53 @@ namespace Controle_de_Transporte.Service
             }
         }
 
-        public List<CargoModel> GetAll()
+        public async Task<List<CargoModel>> GetAllAsync()
         {
             try
             {
-                return _repository.GetAll();
+                return await _repository.GetAllAsync();
             }
             catch (Exception ex)
             {
                 string errorMessage = "Ocorreu um erro ao buscar Cargos.";
                 throw new Exception(errorMessage, ex);
             }
-
         }
 
         public async Task<CargoModel> AddAsync(CargoModel cargo)
         {
             try
             {
-
-                await _repository.createAsync(cargo);
+                await _repository.CreateAsync(cargo);
                 return cargo;
             }
             catch (Exception ex)
             {
-                string errorMessage = "Ocorreu um erro ao adicinonar um Cargo.";
+                string errorMessage = "Ocorreu um erro ao adicionar um Cargo.";
                 throw new Exception(errorMessage, ex);
             }
         }
 
-        public CargoModel Update(CargoModel cargo)
+        public async Task<CargoModel> UpdateAsync(CargoModel cargo)
         {
             try
             {
-                _repository.update(cargo);
+                await _repository.UpdateAsync(cargo);
                 return cargo;
-
             }
             catch (Exception ex)
             {
-                string errorMessage = "Ocorreu um erro ao atualiza um Cargo.";
+                string errorMessage = "Ocorreu um erro ao atualizar um Cargo.";
                 throw new Exception(errorMessage, ex);
             }
         }
 
-        public CargoModel Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var statusHttp = HttpStatusCode.NoContent;
             try
             {
-                _repository.deleteById(id);
-                return null;
+                await _repository.DeleteByIdAsync(id);
+                return true;
             }
             catch (Exception ex)
             {

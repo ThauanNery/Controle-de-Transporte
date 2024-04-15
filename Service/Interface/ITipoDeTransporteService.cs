@@ -4,10 +4,11 @@ namespace Controle_de_Transporte.Service.Interface
 {
     public interface ITipodeTransporteService
     {
-        TipoDeTransporteModel GetById(int id);
-        List<TipoDeTransporteModel> GetAll();
+        Task<TipoDeTransporteModel> GetByIdAsync(int id);
+        Task<List<TipoDeTransporteModel>> GetAllAsync();
         Task<TipoDeTransporteModel> AddAsync(TipoDeTransporteModel tpTransporte);
-        TipoDeTransporteModel Update(TipoDeTransporteModel tpTransporte);
-        TipoDeTransporteModel Delete(int id);
+        Task<TipoDeTransporteModel> UpdateAsync(TipoDeTransporteModel tpTransporte);
+        Task<bool> DeleteAsync(int id);
     }
+
 }

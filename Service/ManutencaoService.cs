@@ -14,18 +14,17 @@ namespace Controle_de_Transporte.Service
             _repository = repository;
         }
 
-        public ManutencaoModel GetById(int id)
+        public async Task<ManutencaoModel> GetByIdAsync(int id)
         {
             var statusHttp = HttpStatusCode.NotFound;
             try
             {
-                var repositorio = _repository.GetById(id);
-                if (repositorio != null)
+                var manutencao = await _repository.GetByIdAsync(id);
+                if (manutencao != null)
                 {
                     statusHttp = HttpStatusCode.OK;
-
                 }
-                return repositorio;
+                return manutencao;
             }
             catch (Exception ex)
             {
@@ -34,57 +33,53 @@ namespace Controle_de_Transporte.Service
             }
         }
 
-        public List<ManutencaoModel> GetAll()
+        public async Task<List<ManutencaoModel>> GetAllAsync()
         {
             try
             {
-                return _repository.GetAll();
+                return await _repository.GetAllAsync();
             }
             catch (Exception ex)
             {
                 string errorMessage = "Ocorreu um erro ao buscar Tipos de Manutenção.";
                 throw new Exception(errorMessage, ex);
             }
-
         }
 
         public async Task<ManutencaoModel> AddAsync(ManutencaoModel manutencao)
         {
             try
             {
-
-                await _repository.createAsync(manutencao);
+                await _repository.CreateAsync(manutencao);
                 return manutencao;
             }
             catch (Exception ex)
             {
-                string errorMessage = "Ocorreu um erro ao adicinonar um Tipo de Manutenção.";
+                string errorMessage = "Ocorreu um erro ao adicionar um Tipo de Manutenção.";
                 throw new Exception(errorMessage, ex);
             }
         }
 
-        public ManutencaoModel Update(ManutencaoModel manutencao)
+        public async Task<ManutencaoModel> UpdateAsync(ManutencaoModel manutencao)
         {
             try
             {
-                _repository.update(manutencao);
+                await _repository.UpdateAsync(manutencao);
                 return manutencao;
-
             }
             catch (Exception ex)
             {
-                string errorMessage = "Ocorreu um erro ao atualiza um Tipo de Manutenção.";
+                string errorMessage = "Ocorreu um erro ao atualizar um Tipo de Manutenção.";
                 throw new Exception(errorMessage, ex);
             }
         }
 
-        public ManutencaoModel Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var statusHttp = HttpStatusCode.NoContent;
             try
             {
-                _repository.deleteById(id);
-                return null;
+                await _repository.DeleteByIdAsync(id);
+                return true;
             }
             catch (Exception ex)
             {

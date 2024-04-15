@@ -9,10 +9,9 @@ namespace Controle_de_Transporte.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
         public string NomeInstituicao { get; set; }
 
-        [Required]
         public string CNPJ { get; set; }
+
     }
 }

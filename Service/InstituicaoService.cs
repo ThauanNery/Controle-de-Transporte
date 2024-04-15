@@ -2,6 +2,7 @@
 using Controle_de_Transporte.Repository.Interface;
 using Controle_de_Transporte.Service.Interface;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Controle_de_Transporte.Service
 {
@@ -14,18 +15,17 @@ namespace Controle_de_Transporte.Service
             _repository = repository;
         }
 
-        public InstituicaoModel GetById(int id)
+        public async Task<InstituicaoModel> GetByIdAsync(int id)
         {
             var statusHttp = HttpStatusCode.NotFound;
             try
             {
-                var repositorio = _repository.GetById(id);
-                if (repositorio != null)
+                var instituicao = await _repository.GetByIdAsync(id);
+                if (instituicao != null)
                 {
                     statusHttp = HttpStatusCode.OK;
-                    
                 }
-                return repositorio;
+                return instituicao;
             }
             catch (Exception ex)
             {
@@ -34,57 +34,54 @@ namespace Controle_de_Transporte.Service
             }
         }
 
-        public List<InstituicaoModel> GetAll()
+        public async Task<List<InstituicaoModel>> GetAllAsync()
         {
             try
             {
-                return _repository.GetAll();
+                return await _repository.GetAllAsync();
             }
             catch (Exception ex)
             {
                 string errorMessage = "Ocorreu um erro ao buscar a instituição.";
                 throw new Exception(errorMessage, ex);
             }
-            
         }
 
         public async Task<InstituicaoModel> AddAsync(InstituicaoModel instituicao)
         {
             try
             {
-               
-                await _repository.createAsync(instituicao);
+                await _repository.CreateAsync(instituicao);
                 return instituicao;
             }
             catch (Exception ex)
             {
-                string errorMessage = "Ocorreu um erro ao adicinonar a instituição.";
+                string errorMessage = "Ocorreu um erro ao adicionar a instituição.";
                 throw new Exception(errorMessage, ex);
             }
         }
 
-        public InstituicaoModel Update(InstituicaoModel instituicao)
+        public async Task<InstituicaoModel> UpdateAsync(InstituicaoModel instituicao)
         {
             try
             {
-                    _repository.update(instituicao);
-                    return instituicao;
+                await _repository.UpdateAsync(instituicao);
+                return instituicao;
 
             }
             catch (Exception ex)
             {
-                string errorMessage = "Ocorreu um erro ao atualiza a instituição.";
+                string errorMessage = "Ocorreu um erro ao atualizar a instituição.";
                 throw new Exception(errorMessage, ex);
             }
         }
 
-        public InstituicaoModel Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var statusHttp = HttpStatusCode.NoContent;
             try
             {
-                _repository.deleteById(id);
-                return null;
+                await _repository.DeleteByIdAsync(id);
+                return true;
             }
             catch (Exception ex)
             {
@@ -92,6 +89,5 @@ namespace Controle_de_Transporte.Service
                 throw new Exception(errorMessage, ex);
             }
         }
-             
     }
 }

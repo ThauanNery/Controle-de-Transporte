@@ -4,10 +4,11 @@ namespace Controle_de_Transporte.Repository.Interface
 {
     public interface ICargoRepository
     {
-        CargoModel GetById(int id);
-        List<CargoModel> GetAll();
-        Task<CargoModel> createAsync(CargoModel cargo);
-        CargoModel update(CargoModel cargo);
-        bool deleteById(int id);
+        Task<CargoModel> GetByIdAsync(int id);
+        Task<List<CargoModel>> GetAllAsync();
+        Task<CargoModel> CreateAsync(CargoModel cargo);
+        Task<CargoModel> UpdateAsync(CargoModel cargo);
+        Task<bool> DeleteByIdAsync(int id);
     }
+
 }

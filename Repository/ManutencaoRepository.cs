@@ -1,6 +1,8 @@
 ﻿using Controle_de_Transporte.Data;
 using Controle_de_Transporte.Models;
 using Controle_de_Transporte.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Controle_de_Transporte.Repository
 {
@@ -12,16 +14,17 @@ namespace Controle_de_Transporte.Repository
             _context = context;
         }
 
-        public ManutencaoModel GetById(int id)
+        public async Task<ManutencaoModel> GetByIdAsync(int id)
         {
-            return _context.manutencaos.FirstOrDefault(x => x.Id == id);
+            return await _context.manutencaos.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public List<ManutencaoModel> GetAll()
+        public async Task<List<ManutencaoModel>> GetAllAsync()
         {
-            return _context.manutencaos.ToList();
+            return await _context.manutencaos.ToListAsync();
         }
-        public async Task<ManutencaoModel> createAsync(ManutencaoModel manutencao)
+
+        public async Task<ManutencaoModel> CreateAsync(ManutencaoModel manutencao)
         {
             try
             {
@@ -35,9 +38,9 @@ namespace Controle_de_Transporte.Repository
             }
         }
 
-        public ManutencaoModel update(ManutencaoModel manutencao)
+        public async Task<ManutencaoModel> UpdateAsync(ManutencaoModel manutencao)
         {
-            ManutencaoModel manutencaoDb = GetById(manutencao.Id);
+            ManutencaoModel manutencaoDb = await GetByIdAsync(manutencao.Id);
 
             if (manutencaoDb == null) throw new Exception("Houve um erro na atualização do Tipo de Matutenção!");
 
@@ -45,18 +48,19 @@ namespace Controle_de_Transporte.Repository
             manutencaoDb.Custo = manutencao.Custo;
 
             _context.manutencaos.Update(manutencaoDb);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return manutencaoDb;
         }
-        public bool deleteById(int id)
+
+        public async Task<bool> DeleteByIdAsync(int id)
         {
-            ManutencaoModel manutencaoDb = GetById(id);
+            ManutencaoModel manutencaoDb = await GetByIdAsync(id);
 
             if (manutencaoDb == null) throw new Exception("Houve um erro ao apagar o Tipo de Matutenção!");
 
             _context.manutencaos.Remove(manutencaoDb);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
     }
