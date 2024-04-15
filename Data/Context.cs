@@ -1,6 +1,5 @@
 ﻿using Controle_de_Transporte.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace Controle_de_Transporte.Data
 {
@@ -21,7 +20,13 @@ namespace Controle_de_Transporte.Data
         public DbSet<ManutencaoModel> manutencaos { get; set; }
         public DbSet<TransporteModel> transportes { get; set; }
 
-      
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<DepartamentoModel>()
+                .HasOne(d => d.Instituicao)
+                .WithMany(i => i.Departamentos)
+                .HasForeignKey(d => d.InstituicaoId);
+        }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{

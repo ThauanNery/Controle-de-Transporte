@@ -10,8 +10,9 @@ namespace Controle_de_Transporte.Models
         public int Id { get; set; }
 
         public string NomeInstituicao { get; set; }
-
         public string CNPJ { get; set; }
+
+        public virtual ICollection<DepartamentoModel> Departamentos { get; set; }
 
     }
 }
