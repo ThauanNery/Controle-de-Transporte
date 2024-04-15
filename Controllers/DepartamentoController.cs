@@ -69,7 +69,7 @@ namespace Controle_de_Transporte.Controllers
             try
             {
                 await _departamentoService.UpdateAsync(departamento);
-                return NoContent();
+                return Ok(departamento);
             }
             catch (Exception ex)
             {
@@ -83,7 +83,7 @@ namespace Controle_de_Transporte.Controllers
             try
             {
                 await _departamentoService.DeleteAsync(id);
-                return NoContent();
+                return Ok();
             }
             catch (Exception ex)
             {

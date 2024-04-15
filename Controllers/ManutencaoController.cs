@@ -70,7 +70,7 @@ namespace Controle_de_Transporte.Controllers
             try
             {
                 await _manutencaoService.UpdateAsync(manutencao);
-                return NoContent();
+                return Ok(manutencao);
             }
             catch (Exception ex)
             {
@@ -84,7 +84,7 @@ namespace Controle_de_Transporte.Controllers
             try
             {
                 await _manutencaoService.DeleteAsync(id);
-                return NoContent();
+                return Ok();
             }
             catch (Exception ex)
             {
