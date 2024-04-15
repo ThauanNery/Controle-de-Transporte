@@ -54,8 +54,11 @@ namespace Controle_de_Transporte
 
                     services.AddScoped<IInstituicaoRepository, InstituicaoRepository>();
                     services.AddTransient<IInstituicaoService, InstituicaoService>();
+                    services.AddScoped<IManutencaoRepository, ManutencaoRepository>();
+                    services.AddTransient<IManutencaoService, ManutencaoService>();
                     services.AddScoped<ITipodeTransporteRepository, TipodeTransporteRepository>();
                     services.AddTransient<ITipodeTransporteService, TipodeTransporteService>();
+
                 })
                 .Configure((app) =>
                 {

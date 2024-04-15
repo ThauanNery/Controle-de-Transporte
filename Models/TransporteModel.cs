@@ -1,7 +1,12 @@
-﻿namespace Controle_de_Transporte.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace Controle_de_Transporte.Models
 {
     public class TransporteModel
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int TipoTransporteId { get; set; }
         public int MatriculaFuncionarioId { get; set; }

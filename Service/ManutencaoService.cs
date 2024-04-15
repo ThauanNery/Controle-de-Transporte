@@ -5,16 +5,16 @@ using System.Net;
 
 namespace Controle_de_Transporte.Service
 {
-    public class TipodeTransporteService : ITipodeTransporteService
+    public class ManutencaoService : IManutencaoService
     {
-        private readonly ITipodeTransporteRepository _repository;
+        private readonly IManutencaoRepository _repository;
 
-        public TipodeTransporteService(ITipodeTransporteRepository repository)
+        public ManutencaoService(IManutencaoRepository repository)
         {
             _repository = repository;
         }
 
-        public TipoDeTransporteModel GetById(int id)
+        public ManutencaoModel GetById(int id)
         {
             var statusHttp = HttpStatusCode.NotFound;
             try
@@ -23,19 +23,18 @@ namespace Controle_de_Transporte.Service
                 if (repositorio != null)
                 {
                     statusHttp = HttpStatusCode.OK;
-                    
+
                 }
                 return repositorio;
             }
             catch (Exception ex)
             {
-
-                string errorMessage = "Ocorreu um erro ao buscar o Tipo de Transporte por Id.";
+                string errorMessage = "Ocorreu um erro ao buscar um Tipo de Manutenção por Id.";
                 throw new Exception(errorMessage, ex);
             }
         }
 
-        public List<TipoDeTransporteModel> GetAll()
+        public List<ManutencaoModel> GetAll()
         {
             try
             {
@@ -43,42 +42,43 @@ namespace Controle_de_Transporte.Service
             }
             catch (Exception ex)
             {
-                string errorMessage = "Ocorreu um erro ao buscar o Tipo de Transporte.";
+                string errorMessage = "Ocorreu um erro ao buscar Tipos de Manutenção.";
                 throw new Exception(errorMessage, ex);
             }
+
         }
 
-        public async Task<TipoDeTransporteModel> AddAsync(TipoDeTransporteModel tpTransporte)
+        public async Task<ManutencaoModel> AddAsync(ManutencaoModel manutencao)
         {
             try
             {
-               
-                await _repository.createAsync(tpTransporte);
-                return tpTransporte;
+
+                await _repository.createAsync(manutencao);
+                return manutencao;
             }
             catch (Exception ex)
             {
-                string errorMessage = "Ocorreu um erro ao adicionar o Tipo de Transporte.";
+                string errorMessage = "Ocorreu um erro ao adicinonar um Tipo de Manutenção.";
                 throw new Exception(errorMessage, ex);
             }
         }
 
-        public TipoDeTransporteModel Update(TipoDeTransporteModel instituicao)
+        public ManutencaoModel Update(ManutencaoModel manutencao)
         {
             try
             {
-                    _repository.update(instituicao);
-                    return instituicao;
+                _repository.update(manutencao);
+                return manutencao;
 
             }
             catch (Exception ex)
             {
-                string errorMessage = "Ocorreu um erro ao atualizar o Tipo de Transporte.";
+                string errorMessage = "Ocorreu um erro ao atualiza um Tipo de Manutenção.";
                 throw new Exception(errorMessage, ex);
             }
         }
 
-        public TipoDeTransporteModel Delete(int id)
+        public ManutencaoModel Delete(int id)
         {
             var statusHttp = HttpStatusCode.NoContent;
             try
@@ -88,10 +88,9 @@ namespace Controle_de_Transporte.Service
             }
             catch (Exception ex)
             {
-                string errorMessage = "Ocorreu um erro ao apagar o Tipo de Transporte.";
+                string errorMessage = "Ocorreu um erro ao apagar um Tipo de Manutenção.";
                 throw new Exception(errorMessage, ex);
             }
         }
-             
     }
 }

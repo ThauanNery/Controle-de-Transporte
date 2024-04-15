@@ -27,15 +27,25 @@ namespace Controle_de_Transporte.Service
                 }
                 return repositorio;
             }
-            catch (Exception Ex)
+            catch (Exception ex)
             {
-                throw;
+                string errorMessage = "Ocorreu um erro ao buscar a instituição por Id.";
+                throw new Exception(errorMessage, ex);
             }
         }
 
         public List<InstituicaoModel> GetAll()
         {
-            return _repository.GetAll();
+            try
+            {
+                return _repository.GetAll();
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = "Ocorreu um erro ao buscar a instituição.";
+                throw new Exception(errorMessage, ex);
+            }
+            
         }
 
         public async Task<InstituicaoModel> AddAsync(InstituicaoModel instituicao)
@@ -47,8 +57,9 @@ namespace Controle_de_Transporte.Service
                 return instituicao;
             }
             catch (Exception ex)
-            {               
-                throw;
+            {
+                string errorMessage = "Ocorreu um erro ao adicinonar a instituição.";
+                throw new Exception(errorMessage, ex);
             }
         }
 
@@ -60,9 +71,10 @@ namespace Controle_de_Transporte.Service
                     return instituicao;
 
             }
-            catch (Exception Ex)
+            catch (Exception ex)
             {
-                throw;
+                string errorMessage = "Ocorreu um erro ao atualiza a instituição.";
+                throw new Exception(errorMessage, ex);
             }
         }
 
@@ -74,9 +86,10 @@ namespace Controle_de_Transporte.Service
                 _repository.deleteById(id);
                 return null;
             }
-            catch (Exception Ex)
+            catch (Exception ex)
             {
-                throw;
+                string errorMessage = "Ocorreu um erro ao apagar a instituição.";
+                throw new Exception(errorMessage, ex);
             }
         }
              

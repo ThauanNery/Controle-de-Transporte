@@ -20,15 +20,10 @@ namespace Controle_de_Transporte.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            try
-            {
+           
                 var retorno = _instituicaoService.GetAll();
                 return StatusCode((int)HttpStatusCode.OK, retorno);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
-            }
+           
         }
 
         [HttpGet("{id:int}")]
@@ -42,15 +37,8 @@ namespace Controle_de_Transporte.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(InstituicaoModel instituicao)
         {
-            try
-            {
                 var retorno = await _instituicaoService.AddAsync(instituicao);
-                return StatusCode((int)HttpStatusCode.Created, null);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
-            }
+                return StatusCode((int)HttpStatusCode.Created, retorno);
         }
 
         
@@ -58,14 +46,14 @@ namespace Controle_de_Transporte.Controllers
         public IActionResult Update(InstituicaoModel instituicao)
         {
             var retorno = _instituicaoService.Update(instituicao);
-            return StatusCode((int)HttpStatusCode.OK, null);
+            return StatusCode((int)HttpStatusCode.OK, retorno);
         }
 
         [HttpDelete("{id:int}")]
         public virtual IActionResult Delete(int id)
         {
             var retorno = _instituicaoService.Delete(id);
-            return StatusCode((int)HttpStatusCode.OK, null);
+            return StatusCode((int)HttpStatusCode.OK, retorno);
         }
 
     }
