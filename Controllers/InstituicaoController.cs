@@ -9,7 +9,7 @@ namespace Controle_de_Transporte.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class InstituicaoController : Controller
+    public class InstituicaoController : ControllerBase
     {
         private readonly IInstituicaoService _instituicaoService;
         public InstituicaoController(IInstituicaoService instituicaoService)
@@ -40,18 +40,32 @@ namespace Controle_de_Transporte.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(InstituicaoModel instituicao)
+        public async Task<IActionResult> Create(InstituicaoModel instituicao)
         {
             try
             {
-                var retorno = _instituicaoService.Add(instituicao);
+                var retorno = await _instituicaoService.AddAsync(instituicao);
                 return StatusCode((int)HttpStatusCode.Created, null);
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, null);
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
             }
         }
+
+        //[HttpPost]
+        //public IActionResult Create(InstituicaoModel instituicao)
+        //{
+        //    try
+        //    {
+        //        var retorno = _instituicaoService.AddAsync(instituicao);
+        //        return StatusCode((int)HttpStatusCode.Created, null);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode((int)HttpStatusCode.InternalServerError, null);
+        //    }
+        //}
         [HttpPut]
         public IActionResult Update(InstituicaoModel instituicao)
         {

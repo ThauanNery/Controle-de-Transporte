@@ -6,7 +6,7 @@ namespace Controle_de_Transporte.Repository.Interface
     {
         InstituicaoModel GetById(int id);
         List<InstituicaoModel> GetAll();
-        InstituicaoModel create (InstituicaoModel instituicao);
+        Task<InstituicaoModel> createAsync(InstituicaoModel instituicao);
         InstituicaoModel update (InstituicaoModel instituicao);
         bool deleteById (int id);
     }

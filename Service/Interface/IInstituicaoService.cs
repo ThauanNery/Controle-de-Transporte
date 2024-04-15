@@ -6,7 +6,7 @@ namespace Controle_de_Transporte.Service.Interface
     {
         InstituicaoModel GetById(int id);
         List<InstituicaoModel> GetAll();
-        InstituicaoModel Add(InstituicaoModel instituicao);
+        Task<InstituicaoModel> AddAsync(InstituicaoModel instituicao);
         InstituicaoModel Update(InstituicaoModel instituicao);
         InstituicaoModel Delete(int id);
     }

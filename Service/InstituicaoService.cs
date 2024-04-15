@@ -23,26 +23,36 @@ namespace Controle_de_Transporte.Service
         {
             return _repository.GetAll();
         }
-      
-        public InstituicaoModel Add(InstituicaoModel instituicao)
+
+        public async Task<InstituicaoModel> AddAsync(InstituicaoModel instituicao)
         {
-            var statusHttp = HttpStatusCode.Created;
             try
             {
-                bool atualizaEntidade = (bool)instituicao.GetType().GetProperty("AtualizaEntidade").GetValue(instituicao);
-                if (atualizaEntidade)
-                {
-                    _repository.create(instituicao);
-                }
-
+               
+                await _repository.createAsync(instituicao);
                 return instituicao;
-
             }
-            catch (Exception Ex)
-            {
+            catch (Exception ex)
+            {               
                 throw;
             }
         }
+
+        //public InstituicaoModel Add(InstituicaoModel instituicao)
+        //{
+        //    var statusHttp = HttpStatusCode.Created;
+        //    try
+        //    {
+
+        //        _repository.create(instituicao);               
+        //        return instituicao;
+
+        //    }
+        //    catch (Exception Ex)
+        //    {
+        //        throw;
+        //    }
+        //}
 
         public InstituicaoModel Update(InstituicaoModel instituicao)
         {

@@ -21,17 +21,17 @@ namespace Controle_de_Transporte.Data
         public DbSet<ManutencaoModel> manutencaos { get; set; }
         public DbSet<TransporteModel> transportes { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            // Leia a string de conexão do arquivo appsettings.json
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    // Leia a string de conexão do arquivo appsettings.json
+        //    var configuration = new ConfigurationBuilder()
+        //        .SetBasePath(Directory.GetCurrentDirectory())
+        //        .AddJsonFile("appsettings.json")
+        //        .Build();
 
-            var connectionString = configuration.GetConnectionString("MyDatabase");
-            optionsBuilder.UseSqlServer(connectionString);
-        }
+        //    var connectionString = configuration.GetConnectionString("MyDatabase");
+        //    optionsBuilder.UseSqlServer(connectionString);
+        //}
 
     }
 }

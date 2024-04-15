@@ -22,14 +22,26 @@ namespace Controle_de_Transporte.Repository
         {
             return _context.Instituicaos.ToList();
         }
-
-        public InstituicaoModel create(InstituicaoModel instituicao)
+        public async Task<InstituicaoModel> createAsync(InstituicaoModel instituicao)
         {
-            _context.Instituicaos.Add(instituicao);
-            _context.SaveChangesAsync();
-            return instituicao;
+            try
+            {
+                _context.Instituicaos.Add(instituicao);
+                await _context.SaveChangesAsync();
+                return instituicao;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao salvar instituição no banco de dados.", ex);
+            }
         }
-              
+        //public InstituicaoModel create(InstituicaoModel instituicao)
+        //{
+        //    _context.Instituicaos.Add(instituicao);
+        //    _context.SaveChangesAsync();
+        //    return instituicao;
+        //}
+
         public InstituicaoModel update(InstituicaoModel instituicao)
         {
             InstituicaoModel InstitucaoDb = GetById(instituicao.Id);
