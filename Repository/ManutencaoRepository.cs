@@ -31,7 +31,7 @@ namespace Controle_de_Transporte.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao salvar instituição no banco de dados.", ex);
+                throw new Exception("Erro ao salvar Tipo de Matutenção no banco de dados.", ex);
             }
         }
 
@@ -39,7 +39,7 @@ namespace Controle_de_Transporte.Repository
         {
             ManutencaoModel manutencaoDb = GetById(manutencao.Id);
 
-            if (manutencaoDb == null) throw new Exception("Houve um erro na atualização da Instituição!");
+            if (manutencaoDb == null) throw new Exception("Houve um erro na atualização do Tipo de Matutenção!");
 
             manutencaoDb.TipoManutencao = manutencao.TipoManutencao;
             manutencaoDb.Custo = manutencao.Custo;
@@ -53,7 +53,7 @@ namespace Controle_de_Transporte.Repository
         {
             ManutencaoModel manutencaoDb = GetById(id);
 
-            if (manutencaoDb == null) throw new Exception("Houve um erro ao apagar a Instituição!");
+            if (manutencaoDb == null) throw new Exception("Houve um erro ao apagar o Tipo de Matutenção!");
 
             _context.manutencaos.Remove(manutencaoDb);
             _context.SaveChanges();

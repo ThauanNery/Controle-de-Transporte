@@ -52,6 +52,8 @@ namespace Controle_de_Transporte
                     // Configure outros serviços
                     services.AddControllersWithViews();
 
+                    services.AddScoped<ICargoRepository, CargoRepository>();
+                    services.AddTransient<ICargoService, CargoService>();
                     services.AddScoped<IInstituicaoRepository, InstituicaoRepository>();
                     services.AddTransient<IInstituicaoService, InstituicaoService>();
                     services.AddScoped<IManutencaoRepository, ManutencaoRepository>();

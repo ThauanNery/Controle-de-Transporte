@@ -32,7 +32,7 @@ namespace Controle_de_Transporte.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao salvar instituição no banco de dados.", ex);
+                throw new Exception("Erro ao salvar o Tipo de Transporte no banco de dados.", ex);
             }
         }
       
@@ -40,7 +40,7 @@ namespace Controle_de_Transporte.Repository
         {
             TipoDeTransporteModel tpTransporteDb = GetById(tpTransporte.Id);
 
-            if (tpTransporteDb == null) throw new Exception("Houve um erro na atualização da Tipo de Transport!");
+            if (tpTransporteDb == null) throw new Exception("Houve um erro na atualização do Tipo de Transporte!");
 
             tpTransporteDb.NomeTransporte = tpTransporte.NomeTransporte;
 
@@ -53,7 +53,7 @@ namespace Controle_de_Transporte.Repository
         {
             TipoDeTransporteModel tpTransporteDb = GetById(id);
 
-            if (tpTransporteDb == null) throw new Exception("Houve um erro ao apagar Tipo de Transportes!");
+            if (tpTransporteDb == null) throw new Exception("Houve um erro ao apagar o Tipo de Transporte!");
 
             _context.tipoDeTransportes.Remove(tpTransporteDb);
             _context.SaveChanges();
