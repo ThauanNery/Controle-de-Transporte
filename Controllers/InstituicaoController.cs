@@ -53,19 +53,7 @@ namespace Controle_de_Transporte.Controllers
             }
         }
 
-        //[HttpPost]
-        //public IActionResult Create(InstituicaoModel instituicao)
-        //{
-        //    try
-        //    {
-        //        var retorno = _instituicaoService.AddAsync(instituicao);
-        //        return StatusCode((int)HttpStatusCode.Created, null);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode((int)HttpStatusCode.InternalServerError, null);
-        //    }
-        //}
+        
         [HttpPut]
         public IActionResult Update(InstituicaoModel instituicao)
         {

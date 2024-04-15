@@ -35,13 +35,7 @@ namespace Controle_de_Transporte.Repository
                 throw new Exception("Erro ao salvar instituição no banco de dados.", ex);
             }
         }
-        //public InstituicaoModel create(InstituicaoModel instituicao)
-        //{
-        //    _context.Instituicaos.Add(instituicao);
-        //    _context.SaveChangesAsync();
-        //    return instituicao;
-        //}
-
+      
         public InstituicaoModel update(InstituicaoModel instituicao)
         {
             InstituicaoModel InstitucaoDb = GetById(instituicao.Id);

@@ -38,22 +38,6 @@ namespace Controle_de_Transporte.Service
             }
         }
 
-        //public InstituicaoModel Add(InstituicaoModel instituicao)
-        //{
-        //    var statusHttp = HttpStatusCode.Created;
-        //    try
-        //    {
-
-        //        _repository.create(instituicao);               
-        //        return instituicao;
-
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //        throw;
-        //    }
-        //}
-
         public InstituicaoModel Update(InstituicaoModel instituicao)
         {
             var statusHttp = HttpStatusCode.NoContent;
