@@ -16,7 +16,21 @@ namespace Controle_de_Transporte.Service
 
         public InstituicaoModel GetById(int id)
         {
-            return _repository.GetById(id);
+            var statusHttp = HttpStatusCode.NotFound;
+            try
+            {
+                var repositorio = _repository.GetById(id);
+                if (repositorio != null)
+                {
+                    statusHttp = HttpStatusCode.OK;
+                    
+                }
+                return repositorio;
+            }
+            catch (Exception Ex)
+            {
+                throw;
+            }
         }
 
         public List<InstituicaoModel> GetAll()
@@ -40,17 +54,10 @@ namespace Controle_de_Transporte.Service
 
         public InstituicaoModel Update(InstituicaoModel instituicao)
         {
-            var statusHttp = HttpStatusCode.NoContent;
             try
             {
-                bool atualizaEntidade = (bool)instituicao.GetType().GetProperty("AtualizaEntidade").GetValue(instituicao);
-                if (atualizaEntidade)
-                {
                     _repository.update(instituicao);
-                }
-
-
-                return instituicao;
+                    return instituicao;
 
             }
             catch (Exception Ex)

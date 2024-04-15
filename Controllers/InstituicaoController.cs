@@ -23,7 +23,7 @@ namespace Controle_de_Transporte.Controllers
             try
             {
                 var retorno = _instituicaoService.GetAll();
-                return StatusCode((int)HttpStatusCode.OK, null);
+                return StatusCode((int)HttpStatusCode.OK, retorno);
             }
             catch (Exception ex)
             {
@@ -35,7 +35,7 @@ namespace Controle_de_Transporte.Controllers
         public IActionResult GetById(int id)
         {
             var retorno = _instituicaoService.GetById(id);
-            return StatusCode((int)HttpStatusCode.OK, null);
+            return StatusCode((int)HttpStatusCode.OK, retorno);
         }
 
 
