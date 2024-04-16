@@ -10,10 +10,12 @@ namespace Controle_de_Transporte.Service
         public class DepartamentoService : IDepartamentoService
         {
             private readonly IDepartamentoRepository _repository;
+            private readonly IInstituicaoRepository _instituicaoRepository;
 
-            public DepartamentoService(IDepartamentoRepository repository)
+            public DepartamentoService(IDepartamentoRepository repository, IInstituicaoRepository instituicaoRepository)
             {
                 _repository = repository;
+                _instituicaoRepository = instituicaoRepository;
             }
 
         public async Task<DepartamentoModel> GetByIdAsync(int id)
@@ -48,25 +50,50 @@ namespace Controle_de_Transporte.Service
             }
         }
 
-        public async Task<DepartamentoModel> AddAsync(DepartamentoModel departamento)
+        public async Task<DepartamentoModel> AddAsync(DepartamentoModel departamento, int instituicaoId)
         {
             try
             {
-                var instituicao = await _repository.GetByIdAsync(departamento.InstituicaoId);
+                // Verifica se a instituição associada ao departamento existe
+                var instituicao = await _instituicaoRepository.GetByIdAsync(instituicaoId);
+
                 if (instituicao == null)
                 {
-                    throw new Exception("Instituicao não encontrada com o ID informado.");
+                    throw new InvalidOperationException("A instituição especificada não foi encontrada.");
                 }
 
+                // Associa a instituição ao departamento
+                departamento.InstituicaoId = instituicaoId;
+
+                // Adiciona o departamento ao repositório
                 await _repository.createAsync(departamento);
+
+                // Retorna o departamento adicionado
                 return departamento;
             }
             catch (Exception ex)
             {
-                string errorMessage = "Ocorreu um erro ao adicinonar um Departamento.";
-                throw new Exception(errorMessage, ex);
+                throw new Exception("Erro ao adicionar Departamento.", ex);
             }
         }
+
+
+
+
+        //public async Task<DepartamentoModel> AddAsync(DepartamentoModel departamento)
+        //{
+        //    try
+        //    {
+
+        //        await _repository.createAsync(departamento);
+        //        return departamento;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        string errorMessage = "Ocorreu um erro ao adicinonar um Departamento.";
+        //        throw new Exception(errorMessage, ex);
+        //    }
+        //}
 
         public async Task<DepartamentoModel> UpdateAsync(DepartamentoModel departamento)
         {

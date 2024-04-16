@@ -24,7 +24,7 @@ namespace Controle_de_Transporte.Data
         {
             modelBuilder.Entity<DepartamentoModel>()
                 .HasOne(d => d.Instituicao)
-                .WithMany(i => i.Departamentos)
+                .WithMany()
                 .HasForeignKey(d => d.InstituicaoId);
         }
 

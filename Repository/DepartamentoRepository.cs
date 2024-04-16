@@ -16,20 +16,48 @@ namespace Controle_de_Transporte.Repository
 
         public async Task<DepartamentoModel> GetByIdAsync(int id)
         {
-            return await _context.Departamentos.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Departamentos
+                .Include(d => d.Instituicao)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<DepartamentoModel>> GetAllAsync()
         {
-            return await _context.Departamentos.ToListAsync();
+            return await _context.Departamentos
+                .Include(d => d.Instituicao)
+                .ToListAsync();
         }
+
+        //public async Task<DepartamentoModel> GetByIdAsync(int id)
+        //{
+        //    return await _context.Departamentos.FirstOrDefaultAsync(x => x.Id == id);
+        //}
+
+        //public async Task<List<DepartamentoModel>> GetAllAsync()
+        //{
+        //    return await _context.Departamentos.ToListAsync();
+        //}
 
         public async Task<DepartamentoModel> createAsync(DepartamentoModel departamento)
         {
             try
             {
+                // Verifica se a instituição associada ao departamento existe
+                var instituicao = await _context.Instituicaos.FindAsync(departamento.InstituicaoId);
+                if (instituicao == null)
+                {
+                    throw new InvalidOperationException("A instituição especificada não foi encontrada.");
+                }
+
+                // Associa a instituição ao departamento
+                departamento.Instituicao = instituicao;
+
+                // Adiciona o departamento ao contexto
                 _context.Departamentos.Add(departamento);
+
+                // Salva as alterações no banco de dados
                 await _context.SaveChangesAsync();
+
                 return departamento;
             }
             catch (Exception ex)
@@ -38,19 +66,67 @@ namespace Controle_de_Transporte.Repository
             }
         }
 
+
+        //public async Task<DepartamentoModel> createAsync(DepartamentoModel departamento)
+        //{
+        //    try
+        //    {
+
+        //        _context.Departamentos.Add(departamento);
+        //        await _context.SaveChangesAsync();
+        //        return departamento;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Erro ao salvar Departamento no banco de dados.", ex);
+        //    }
+        //}
+
         public async Task<DepartamentoModel> updateAsync(DepartamentoModel departamento)
         {
+            // Busca o departamento no banco de dados pelo ID
             DepartamentoModel departamentoDb = await GetByIdAsync(departamento.Id);
 
-            if (departamentoDb == null) throw new Exception("Houve um erro na atualização do Departamento!");
+            // Verifica se o departamento existe
+            if (departamentoDb == null)
+            {
+                throw new Exception("Departamento não encontrado!");
+            }
 
+            // Atualiza os dados do departamento com os novos valores
             departamentoDb.NomeDepartamento = departamento.NomeDepartamento;
 
-            _context.Departamentos.Update(departamentoDb);
-            await _context.SaveChangesAsync();
+            // Atualiza a instituição associada
+            departamentoDb.InstituicaoId = departamento.InstituicaoId;
 
-            return departamentoDb;
+            try
+            {
+                // Atualiza o departamento no banco de dados
+                _context.Departamentos.Update(departamentoDb);
+                await _context.SaveChangesAsync();
+
+                return departamentoDb;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro ao atualizar o Departamento.", ex);
+            }
         }
+
+
+        //public async Task<DepartamentoModel> updateAsync(DepartamentoModel departamento)
+        //{
+        //    DepartamentoModel departamentoDb = await GetByIdAsync(departamento.Id);
+
+        //    if (departamentoDb == null) throw new Exception("Houve um erro na atualização do Departamento!");
+
+        //    departamentoDb.NomeDepartamento = departamento.NomeDepartamento;
+
+        //    _context.Departamentos.Update(departamentoDb);
+        //    await _context.SaveChangesAsync();
+
+        //    return departamentoDb;
+        //}
 
         public async Task<bool> deleteByIdAsync(int id)
         {

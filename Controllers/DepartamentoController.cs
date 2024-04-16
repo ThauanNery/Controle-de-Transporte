@@ -49,19 +49,42 @@ namespace Controle_de_Transporte.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateAsync(DepartamentoModel departamento)
+        [HttpPost("{instituicaoId}")]
+        public async Task<IActionResult> CreateDepartamento(int instituicaoId, [FromBody] DepartamentoModel departamento)
         {
             try
             {
-                var retorno = await _departamentoService.AddAsync(departamento);
-                return StatusCode((int)HttpStatusCode.Created, retorno);
+                // Chama o método AddAsync do serviço, passando o departamento e o ID da instituição
+                var novoDepartamento = await _departamentoService.AddAsync(departamento, instituicaoId);
+
+                // Retorna o novo departamento criado
+                return CreatedAtAction(nameof(GetByIdAsync), new { id = novoDepartamento.Id }, novoDepartamento);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message); // Retorna NotFound se a instituição não for encontrada
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, "Ocorreu um erro ao criar o departamento.");
             }
         }
+
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> CreateAsync(DepartamentoModel departamento)
+        //{
+        //    try
+        //    {
+        //        var retorno = await _departamentoService.AddAsync(departamento);
+        //        return StatusCode((int)HttpStatusCode.Created, retorno);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
 
         [HttpPut]
         public async Task<IActionResult> UpdateAsync(DepartamentoModel departamento)

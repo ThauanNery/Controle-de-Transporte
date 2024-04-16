@@ -1,7 +1,6 @@
 ﻿using Controle_de_Transporte.Data;
 using Controle_de_Transporte.Models;
 using Controle_de_Transporte.Repository.Interface;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.EntityFrameworkCore;
 
 namespace Controle_de_Transporte.Repository
@@ -13,7 +12,6 @@ namespace Controle_de_Transporte.Repository
         {
             _context = context;
         }
-
         public async Task<InstituicaoModel> GetByIdAsync(int id)
         {
             return await _context.Instituicaos.FirstOrDefaultAsync(x => x.Id == id);

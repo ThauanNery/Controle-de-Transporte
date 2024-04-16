@@ -11,8 +11,5 @@ namespace Controle_de_Transporte.Models
 
         public string NomeInstituicao { get; set; }
         public string CNPJ { get; set; }
-
-        public virtual ICollection<DepartamentoModel> Departamentos { get; set; }
-
     }
 }

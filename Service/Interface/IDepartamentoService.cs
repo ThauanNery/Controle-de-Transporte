@@ -6,7 +6,7 @@ namespace Controle_de_Transporte.Service.Interface
     {
         Task<DepartamentoModel> GetByIdAsync(int id);
         Task<List<DepartamentoModel>> GetAllAsync();
-        Task<DepartamentoModel> AddAsync(DepartamentoModel departamento);
+        Task<DepartamentoModel> AddAsync(DepartamentoModel departamento, int nomeInstituicao);
         Task<DepartamentoModel> UpdateAsync(DepartamentoModel departamento);
         Task<bool> DeleteAsync(int id);
     }
