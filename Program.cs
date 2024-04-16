@@ -60,6 +60,8 @@ namespace Controle_de_Transporte
                     services.AddTransient<IInstituicaoService, InstituicaoService>();
                     services.AddScoped<IManutencaoRepository, ManutencaoRepository>();
                     services.AddTransient<IManutencaoService, ManutencaoService>();
+                    services.AddScoped<IMatriculaFuncionarioRepository, MatriculaFuncionarioRepository>();
+                    services.AddTransient<IMatriculaFuncionarioService, MatriculaFuncionarioService>();
                     services.AddScoped<ITipodeTransporteRepository, TipodeTransporteRepository>();
                     services.AddTransient<ITipodeTransporteService, TipodeTransporteService>();
 

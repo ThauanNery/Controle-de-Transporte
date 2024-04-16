@@ -2,18 +2,18 @@
 using Controle_de_Transporte.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace Controle_de_Transporte.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class CargoController : ControllerBase
+    public class MatriculaFuncionarioController : ControllerBase
     {
-        private readonly ICargoService _cargoService;
-        public CargoController(ICargoService cargoService)
+
+        private readonly IMatriculaFuncionarioService _matriculaFuncionarioService;
+        public MatriculaFuncionarioController(IMatriculaFuncionarioService matriculaFuncionarioService)
         {
-            _cargoService = cargoService;
+            _matriculaFuncionarioService = matriculaFuncionarioService;
         }
 
         [HttpGet]
@@ -21,7 +21,7 @@ namespace Controle_de_Transporte.Controllers
         {
             try
             {
-                var cargos = await _cargoService.GetAllAsync();
+                var cargos = await _matriculaFuncionarioService.GetAllAsync();
                 return Ok(cargos);
             }
             catch (Exception ex)
@@ -35,7 +35,7 @@ namespace Controle_de_Transporte.Controllers
         {
             try
             {
-                var cargo = await _cargoService.GetByIdAsync(id);
+                var cargo = await _matriculaFuncionarioService.GetByIdAsync(id);
                 if (cargo == null)
                 {
                     return NotFound();
@@ -50,11 +50,11 @@ namespace Controle_de_Transporte.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(CargoModel cargo)
+        public async Task<IActionResult> CreateAsync(MatriculaFuncionarioModel matriculaFuncionario)
         {
             try
             {
-                var retorno = await _cargoService.AddAsync(cargo);
+                var retorno = await _matriculaFuncionarioService.AddAsync(matriculaFuncionario);
                 return StatusCode((int)HttpStatusCode.Created, retorno);
             }
             catch (Exception ex)
@@ -65,12 +65,12 @@ namespace Controle_de_Transporte.Controllers
 
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync(CargoModel cargo)
+        public async Task<IActionResult> UpdateAsync(MatriculaFuncionarioModel matriculaFuncionario)
         {
             try
             {
-                await _cargoService.UpdateAsync(cargo);
-                return Ok(cargo);
+                await _matriculaFuncionarioService.UpdateAsync(matriculaFuncionario);
+                return Ok(matriculaFuncionario);
             }
             catch (Exception ex)
             {
@@ -83,7 +83,7 @@ namespace Controle_de_Transporte.Controllers
         {
             try
             {
-                await _cargoService.DeleteAsync(id);
+                await _matriculaFuncionarioService.DeleteAsync(id);
                 return Ok();
             }
             catch (Exception ex)
@@ -93,3 +93,4 @@ namespace Controle_de_Transporte.Controllers
         }
     }
 }
+
