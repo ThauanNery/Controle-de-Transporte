@@ -66,6 +66,7 @@ namespace Controle_de_Transporte.Repository
 
             if (FuncionarioDb == null) throw new Exception("Houve um erro na atualização do Funcionario!");
 
+            FuncionarioDb.NomeFuncionario = funcionario.NomeFuncionario;
             FuncionarioDb.Cargo = funcionario.Cargo;
             FuncionarioDb.Departamento = funcionario.Departamento;
 

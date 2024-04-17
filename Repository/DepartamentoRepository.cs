@@ -80,24 +80,19 @@ namespace Controle_de_Transporte.Repository
 
         public async Task<DepartamentoModel> updateAsync(DepartamentoModel departamento)
         {
-            // Busca o departamento no banco de dados pelo ID
             DepartamentoModel departamentoDb = await GetByIdAsync(departamento.Id);
 
-            // Verifica se o departamento existe
             if (departamentoDb == null)
             {
                 throw new Exception("Departamento não encontrado!");
             }
 
-            // Atualiza os dados do departamento com os novos valores
             departamentoDb.NomeDepartamento = departamento.NomeDepartamento;
 
-            // Atualiza a instituição associada
             departamentoDb.InstituicaoId = departamento.InstituicaoId;
 
             try
             {
-                // Atualiza o departamento no banco de dados
                 _context.Departamentos.Update(departamentoDb);
                 await _context.SaveChangesAsync();
 
