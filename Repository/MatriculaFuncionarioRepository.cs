@@ -15,26 +15,40 @@ namespace Controle_de_Transporte.Repository
 
         public async Task<MatriculaFuncionarioModel> GetByIdAsync(int id)
         {
-            return await _context.matriculaFuncionarios.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.matriculaFuncionarios
+                .Include(d => d.Funcionarios)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<MatriculaFuncionarioModel>> GetAllAsync()
         {
-            return await _context.matriculaFuncionarios.ToListAsync();
+            return await _context.matriculaFuncionarios
+                .Include(d => d.Funcionarios)
+                .ToListAsync();
         }
 
         public async Task<MatriculaFuncionarioModel> CreateAsync(MatriculaFuncionarioModel matriculaFuncionario)
         {
             try
             {
+                var funcionario = await _context.Funcionarios.FindAsync(matriculaFuncionario.FuncionarioId);
+                if (funcionario == null)
+                {
+                    throw new InvalidOperationException("A Funcionario especificada não foi encontrada.");
+                }
+
+                matriculaFuncionario.Funcionarios = funcionario;
+
                 _context.matriculaFuncionarios.Add(matriculaFuncionario);
+
                 await _context.SaveChangesAsync();
+
                 return matriculaFuncionario;
             }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao salvar uma matricula no banco de dados.", ex);
-            }
+                throw new Exception("Erro ao salvar Matricula no banco de dados.", ex);
+            }            
         }
 
         public async Task<MatriculaFuncionarioModel> UpdateAsync(MatriculaFuncionarioModel matriculaFuncionario)

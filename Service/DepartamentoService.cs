@@ -54,7 +54,7 @@ namespace Controle_de_Transporte.Service
         {
             try
             {
-                // Verifica se a instituição associada ao departamento existe
+                
                 var instituicao = await _instituicaoRepository.GetByIdAsync(instituicaoId);
 
                 if (instituicao == null)
@@ -62,13 +62,13 @@ namespace Controle_de_Transporte.Service
                     throw new InvalidOperationException("A instituição especificada não foi encontrada.");
                 }
 
-                // Associa a instituição ao departamento
+               
                 departamento.InstituicaoId = instituicaoId;
 
-                // Adiciona o departamento ao repositório
+                
                 await _repository.createAsync(departamento);
 
-                // Retorna o departamento adicionado
+               
                 return departamento;
             }
             catch (Exception ex)

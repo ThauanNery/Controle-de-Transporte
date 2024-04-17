@@ -11,11 +11,12 @@ namespace Controle_de_Transporte.Models
         [Required]
         public string NomeFuncionario { get; set; }
         public int DepartamentoId { get; set; }
-        public int MatriculaFuncionarioId { get; set; }
         public int CargoId { get; set; }
 
+        [ForeignKey("DepartamentoId")]
         public virtual DepartamentoModel Departamento { get; set; }
+
+        [ForeignKey("CargoId")]
         public virtual CargoModel Cargo  { get; set; }
-        public virtual MatriculaFuncionarioModel Matricula { get; set; }
     }
 }

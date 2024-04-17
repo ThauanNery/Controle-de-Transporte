@@ -42,20 +42,16 @@ namespace Controle_de_Transporte.Repository
         {
             try
             {
-                // Verifica se a instituição associada ao departamento existe
                 var instituicao = await _context.Instituicaos.FindAsync(departamento.InstituicaoId);
                 if (instituicao == null)
                 {
                     throw new InvalidOperationException("A instituição especificada não foi encontrada.");
                 }
 
-                // Associa a instituição ao departamento
                 departamento.Instituicao = instituicao;
 
-                // Adiciona o departamento ao contexto
                 _context.Departamentos.Add(departamento);
 
-                // Salva as alterações no banco de dados
                 await _context.SaveChangesAsync();
 
                 return departamento;

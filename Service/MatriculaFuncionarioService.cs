@@ -1,4 +1,5 @@
 ﻿using Controle_de_Transporte.Models;
+using Controle_de_Transporte.Repository;
 using Controle_de_Transporte.Repository.Interface;
 using Controle_de_Transporte.Service.Interface;
 using System.Net;
@@ -8,10 +9,12 @@ namespace Controle_de_Transporte.Service
     public class MatriculaFuncionarioService : IMatriculaFuncionarioService
     {
         private readonly IMatriculaFuncionarioRepository _repository;
+        private readonly IFuncionariosRepository _funcionarioRepository;
 
-        public MatriculaFuncionarioService(IMatriculaFuncionarioRepository repository)
+        public MatriculaFuncionarioService(IMatriculaFuncionarioRepository repository, IFuncionariosRepository funcionarioRepository)
         {
             _repository = repository;
+            _funcionarioRepository = funcionarioRepository;
         }
 
         public async Task<MatriculaFuncionarioModel> GetByIdAsync(int id)
@@ -46,17 +49,30 @@ namespace Controle_de_Transporte.Service
             }
         }
 
-        public async Task<MatriculaFuncionarioModel> AddAsync(MatriculaFuncionarioModel matriculaFuncionario)
+        public async Task<MatriculaFuncionarioModel> AddAsync(MatriculaFuncionarioModel matriculaFuncionario, int FuncionarioId)
         {
             try
             {
+
+                var funcionario = await _funcionarioRepository.GetByIdAsync(FuncionarioId);
+
+                if (funcionario == null)
+                {
+                    throw new InvalidOperationException("A instituição especificada não foi encontrada.");
+                }
+
+
+                matriculaFuncionario.FuncionarioId = FuncionarioId;
+
+
                 await _repository.CreateAsync(matriculaFuncionario);
+
+
                 return matriculaFuncionario;
             }
             catch (Exception ex)
             {
-                string errorMessage = "Ocorreu um erro ao adicionar uma matricula.";
-                throw new Exception(errorMessage, ex);
+                throw new Exception("Erro ao adicionar Departamento.", ex);
             }
         }
 

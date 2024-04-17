@@ -54,15 +54,15 @@ namespace Controle_de_Transporte.Controllers
         {
             try
             {
-                // Chama o método AddAsync do serviço, passando o departamento e o ID da instituição
+              
                 var novoDepartamento = await _departamentoService.AddAsync(departamento, instituicaoId);
 
-                // Retorna o novo departamento criado
+               
                 return CreatedAtAction(nameof(GetByIdAsync), new { id = novoDepartamento.Id }, novoDepartamento);
             }
             catch (InvalidOperationException ex)
             {
-                return NotFound(ex.Message); // Retorna NotFound se a instituição não for encontrada
+                return NotFound(ex.Message); 
             }
             catch (Exception ex)
             {

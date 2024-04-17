@@ -1,5 +1,4 @@
 ﻿using Controle_de_Transporte.Models;
-using Controle_de_Transporte.Service;
 using Controle_de_Transporte.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -8,13 +7,12 @@ namespace Controle_de_Transporte.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class MatriculaFuncionarioController : ControllerBase
+    public class FuncionariosController : Controller
     {
-
-        private readonly IMatriculaFuncionarioService _matriculaFuncionarioService;
-        public MatriculaFuncionarioController(IMatriculaFuncionarioService matriculaFuncionarioService)
+        private readonly IFuncionariosService _funcionarioService;
+        public FuncionariosController(IFuncionariosService funcionarioService)
         {
-            _matriculaFuncionarioService = matriculaFuncionarioService;
+            _funcionarioService = funcionarioService;
         }
 
         [HttpGet]
@@ -22,8 +20,8 @@ namespace Controle_de_Transporte.Controllers
         {
             try
             {
-                var cargos = await _matriculaFuncionarioService.GetAllAsync();
-                return Ok(cargos);
+                var funcionarios = await _funcionarioService.GetAllAsync();
+                return Ok(funcionarios);
             }
             catch (Exception ex)
             {
@@ -36,12 +34,12 @@ namespace Controle_de_Transporte.Controllers
         {
             try
             {
-                var cargo = await _matriculaFuncionarioService.GetByIdAsync(id);
-                if (cargo == null)
+                var funcionarios = await _funcionarioService.GetByIdAsync(id);
+                if (funcionarios == null)
                 {
                     return NotFound();
                 }
-                return Ok(cargo);
+                return Ok(funcionarios);
             }
             catch (Exception ex)
             {
@@ -51,15 +49,15 @@ namespace Controle_de_Transporte.Controllers
 
 
         [HttpPost("{funcionarioId}")]
-        public async Task<IActionResult> CreateAsync(int funcionarioId, [FromBody] MatriculaFuncionarioModel matriculaFuncionario)
+        public async Task<IActionResult> CreateAsync(int departamentoId, int cargoId, [FromBody] FuncionariosModel funcionario)
         {
             try
             {
-               
-                var novaMatricula = await _matriculaFuncionarioService.AddAsync(matriculaFuncionario, funcionarioId);
 
-               
-                return CreatedAtAction(nameof(GetByIdAsync), new { id = novaMatricula.Id }, novaMatricula);
+                var novaoFuncionario = await _funcionarioService.AddAsync(funcionario, departamentoId, cargoId);
+
+
+                return CreatedAtAction(nameof(GetByIdAsync), new { id = novaoFuncionario.Id }, novaoFuncionario);
             }
             catch (InvalidOperationException ex)
             {
@@ -67,18 +65,18 @@ namespace Controle_de_Transporte.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao criar a Matricula.");
+                return StatusCode(500, "Ocorreu um erro ao criar um Funcionario.");
             }
         }
 
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync(MatriculaFuncionarioModel matriculaFuncionario)
+        public async Task<IActionResult> UpdateAsync(FuncionariosModel funcionario)
         {
             try
             {
-                await _matriculaFuncionarioService.UpdateAsync(matriculaFuncionario);
-                return Ok(matriculaFuncionario);
+                await _funcionarioService.UpdateAsync(funcionario);
+                return Ok(funcionario);
             }
             catch (Exception ex)
             {
@@ -91,7 +89,7 @@ namespace Controle_de_Transporte.Controllers
         {
             try
             {
-                await _matriculaFuncionarioService.DeleteAsync(id);
+                await _funcionarioService.DeleteAsync(id);
                 return Ok();
             }
             catch (Exception ex)
@@ -101,4 +99,3 @@ namespace Controle_de_Transporte.Controllers
         }
     }
 }
-

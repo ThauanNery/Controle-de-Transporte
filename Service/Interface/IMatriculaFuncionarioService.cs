@@ -6,7 +6,7 @@ namespace Controle_de_Transporte.Service.Interface
     {
         Task<MatriculaFuncionarioModel> GetByIdAsync(int id);
         Task<List<MatriculaFuncionarioModel>> GetAllAsync();
-        Task<MatriculaFuncionarioModel> AddAsync(MatriculaFuncionarioModel matriculaFuncionario);
+        Task<MatriculaFuncionarioModel> AddAsync(MatriculaFuncionarioModel matriculaFuncionario, int FuncionarioId);
         Task<MatriculaFuncionarioModel> UpdateAsync(MatriculaFuncionarioModel matriculaFuncionario);
         Task<bool> DeleteAsync(int id);
     }
