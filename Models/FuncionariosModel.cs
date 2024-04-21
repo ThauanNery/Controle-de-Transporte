@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Controle_de_Transporte.Models
 {
@@ -14,9 +15,11 @@ namespace Controle_de_Transporte.Models
         public int CargoId { get; set; }
 
         [ForeignKey("DepartamentoId")]
-        public virtual DepartamentoModel Departamento { get; set; }
+        [JsonIgnore]
+        public virtual DepartamentoModel? Departamento { get; set; }
 
         [ForeignKey("CargoId")]
-        public virtual CargoModel Cargo  { get; set; }
+        [JsonIgnore]
+        public virtual CargoModel? Cargo  { get; set; }
     }
 }

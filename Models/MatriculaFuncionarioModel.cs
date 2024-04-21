@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Controle_de_Transporte.Models
 {
@@ -15,6 +16,7 @@ namespace Controle_de_Transporte.Models
         public int FuncionarioId { get; set; }
 
         [ForeignKey("FuncionarioId")]
-        public virtual FuncionariosModel Funcionarios { get; set; }
+        [JsonIgnore]
+        public virtual FuncionariosModel? Funcionarios { get; set; }
     }
 }

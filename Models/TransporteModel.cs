@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Controle_de_Transporte.Models
 {
@@ -15,9 +16,13 @@ namespace Controle_de_Transporte.Models
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }
 
-        public virtual TipoDeTransporteModel TipoDeTransporte { get; set; }
-        public virtual MatriculaFuncionarioModel MatriculaFuncionario { get; set; }
-        public virtual MatriculaTransporteModel MatriculaTransporte { get; set; }
-        public virtual ManutencaoModel Manutencao { get; set; }
+        [JsonIgnore]
+        public virtual TipoDeTransporteModel? TipoDeTransporte { get; set; }
+        [JsonIgnore]
+        public virtual MatriculaFuncionarioModel? MatriculaFuncionario { get; set; }
+        [JsonIgnore]
+        public virtual MatriculaTransporteModel? MatriculaTransporte { get; set; }
+        [JsonIgnore]
+        public virtual ManutencaoModel? Manutencao { get; set; }
     }
 }

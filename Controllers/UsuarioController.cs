@@ -7,12 +7,12 @@ namespace Controle_de_Transporte.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class FuncionariosController : Controller
+    public class UsuarioController : ControllerBase
     {
-        private readonly IFuncionariosService _funcionarioService;
-        public FuncionariosController(IFuncionariosService funcionarioService)
+        private readonly IUsuarioService _usuarioService;
+        public UsuarioController(IUsuarioService usuarioService)
         {
-            _funcionarioService = funcionarioService;
+            _usuarioService = usuarioService;
         }
 
         [HttpGet]
@@ -20,8 +20,8 @@ namespace Controle_de_Transporte.Controllers
         {
             try
             {
-                var funcionarios = await _funcionarioService.GetAllAsync();
-                return Ok(funcionarios);
+                var usuario = await _usuarioService.GetAllAsync();
+                return Ok(usuario);
             }
             catch (Exception ex)
             {
@@ -34,12 +34,12 @@ namespace Controle_de_Transporte.Controllers
         {
             try
             {
-                var funcionarios = await _funcionarioService.GetByIdAsync(id);
-                if (funcionarios == null)
+                var usuario = await _usuarioService.GetByIdAsync(id);
+                if (usuario == null)
                 {
                     return NotFound();
                 }
-                return Ok(funcionarios);
+                return Ok(usuario);
             }
             catch (Exception ex)
             {
@@ -48,16 +48,14 @@ namespace Controle_de_Transporte.Controllers
         }
 
 
-        [HttpPost]
-        public async Task<IActionResult> CreateAsync(int departamentoId, int cargoId, [FromBody] FuncionariosModel funcionario)
+        [HttpPost("{matriculaFuncionarioId}")]
+        public async Task<IActionResult> CreateAsync(int matriculaFuncionarioId, [FromBody] UsuarioModel usuario)
         {
             try
             {
 
-                var novaoFuncionario = await _funcionarioService.AddAsync(funcionario, departamentoId, cargoId);
-
-
-                return CreatedAtAction(nameof(GetByIdAsync), new { id = novaoFuncionario.Id }, novaoFuncionario);
+                var novoUsuario = await _usuarioService.AddAsync(usuario, matriculaFuncionarioId);
+                return CreatedAtAction(nameof(GetByIdAsync), new { id = novoUsuario.Id }, novoUsuario);
             }
             catch (InvalidOperationException ex)
             {
@@ -65,18 +63,18 @@ namespace Controle_de_Transporte.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao criar um Funcionario.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
             }
         }
 
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync(FuncionariosModel funcionario)
+        public async Task<IActionResult> UpdateAsync(UsuarioModel usuario)
         {
             try
             {
-                await _funcionarioService.UpdateAsync(funcionario);
-                return Ok(funcionario);
+                await _usuarioService.UpdateAsync(usuario);
+                return Ok(usuario);
             }
             catch (Exception ex)
             {
@@ -89,7 +87,7 @@ namespace Controle_de_Transporte.Controllers
         {
             try
             {
-                await _funcionarioService.DeleteAsync(id);
+                await _usuarioService.DeleteAsync(id);
                 return Ok();
             }
             catch (Exception ex)
