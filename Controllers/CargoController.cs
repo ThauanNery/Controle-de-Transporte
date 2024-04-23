@@ -64,7 +64,7 @@ namespace Controle_de_Transporte.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateAsync(CargoModel cargo)
         {
             try
