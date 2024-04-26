@@ -16,14 +16,14 @@ namespace Controle_de_Transporte.Repository
         public async Task<UsuarioModel> GetByIdAsync(int id)
         {
             return await _context.Usuarios
-                .Include(d => d.MatriculaFuncionarios)
+                .Include(d => d.Funcionarios)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<UsuarioModel>> GetAllAsync()
         {
             return await _context.Usuarios
-                .Include(d => d.MatriculaFuncionarios)
+                .Include(d => d.Funcionarios)
                 .ToListAsync();
         }
 
@@ -31,13 +31,13 @@ namespace Controle_de_Transporte.Repository
         {
             try
             {
-                var matricula = await _context.matriculaFuncionarios.FindAsync(usuario.MatriculaFuncionarioId);
+                var matricula = await _context.Funcionarios.FindAsync(usuario.FuncionarioId);
                 if (matricula == null)
                 {
                     throw new InvalidOperationException("A Matricula especificada não foi encontrada.");
                 }
 
-                usuario.MatriculaFuncionarios = matricula;
+                usuario.Funcionarios = matricula;
 
                 _context.Usuarios.Add(usuario);
 

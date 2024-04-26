@@ -8,12 +8,12 @@ namespace Controle_de_Transporte.Service
     public class UsuarioService : IUsuarioService
     {
         private readonly IUsuarioRepository _repository;
-        private readonly IMatriculaFuncionarioRepository _matriculaRepository;
+        private readonly IFuncionariosRepository _funcionarioRepository;
 
-        public UsuarioService(IUsuarioRepository repository, IMatriculaFuncionarioRepository matriculaRepository)
+        public UsuarioService(IUsuarioRepository repository, IFuncionariosRepository funcionarioRepository)
         {
             _repository = repository;
-            _matriculaRepository = matriculaRepository;
+            _funcionarioRepository = funcionarioRepository;
         }
 
         public async Task<UsuarioModel> GetByIdAsync(int id)
@@ -48,12 +48,12 @@ namespace Controle_de_Transporte.Service
             }
         }
 
-        public async Task<UsuarioModel> AddAsync(UsuarioModel usuario, int matriculaFuncionarioId)
+        public async Task<UsuarioModel> AddAsync(UsuarioModel usuario, int FuncionarioId)
         {
             try
             {
 
-                var matricula = await _matriculaRepository.GetByIdAsync(matriculaFuncionarioId);
+                var matricula = await _funcionarioRepository.GetByIdAsync(FuncionarioId);
 
                 if (matricula == null)
                 {
@@ -61,7 +61,7 @@ namespace Controle_de_Transporte.Service
                 }
 
 
-                usuario.MatriculaFuncionarioId = matriculaFuncionarioId;
+                usuario.FuncionarioId = FuncionarioId;
 
 
                 await _repository.CreateAsync(usuario);

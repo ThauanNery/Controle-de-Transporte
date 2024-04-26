@@ -43,9 +43,9 @@ namespace Controle_de_Transporte.Data
                 .HasForeignKey(d => d.CargoId);
             
             modelBuilder.Entity<UsuarioModel>()
-                .HasOne(d => d.MatriculaFuncionarios)
+                .HasOne(d => d.Funcionarios)
                 .WithMany()
-                .HasForeignKey(d => d.MatriculaFuncionarioId);
+                .HasForeignKey(d => d.FuncionarioId);
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

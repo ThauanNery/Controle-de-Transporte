@@ -7,7 +7,7 @@ namespace Controle_de_Transporte.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class FuncionariosController : Controller
+    public class FuncionariosController : ControllerBase
     {
         private readonly IFuncionariosService _funcionarioService;
         public FuncionariosController(IFuncionariosService funcionarioService)
@@ -48,7 +48,7 @@ namespace Controle_de_Transporte.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("{cargoId},{departamentoId}")]
         public async Task<IActionResult> CreateAsync(int departamentoId, int cargoId, [FromBody] FuncionariosModel funcionario)
         {
             try
@@ -70,7 +70,7 @@ namespace Controle_de_Transporte.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateAsync(FuncionariosModel funcionario)
         {
             try

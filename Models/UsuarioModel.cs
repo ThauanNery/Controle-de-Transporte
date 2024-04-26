@@ -16,11 +16,11 @@ namespace Controle_de_Transporte.Models
         [Required]
         public string Senha { get; set; }
 
-        public int MatriculaFuncionarioId { get; set; }
+        public int FuncionarioId { get; set; }
 
 
-        [ForeignKey("MatriculaFuncionarioId")]
-        [JsonIgnore]
-        public virtual MatriculaFuncionarioModel? MatriculaFuncionarios { get; set; }
+        [ForeignKey("FuncionarioId")]
+       
+        public virtual FuncionariosModel? Funcionarios { get; set; }
     }
 }

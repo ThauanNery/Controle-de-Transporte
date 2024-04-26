@@ -48,13 +48,13 @@ namespace Controle_de_Transporte.Controllers
         }
 
 
-        [HttpPost("{matriculaFuncionarioId}")]
-        public async Task<IActionResult> CreateAsync(int matriculaFuncionarioId, [FromBody] UsuarioModel usuario)
+        [HttpPost("{funcionarioId}")]
+        public async Task<IActionResult> CreateAsync(int funcionarioId, [FromBody] UsuarioModel usuario)
         {
             try
             {
 
-                var novoUsuario = await _usuarioService.AddAsync(usuario, matriculaFuncionarioId);
+                var novoUsuario = await _usuarioService.AddAsync(usuario, funcionarioId);
                 return CreatedAtAction(nameof(GetByIdAsync), new { id = novoUsuario.Id }, novoUsuario);
             }
             catch (InvalidOperationException ex)
@@ -68,7 +68,7 @@ namespace Controle_de_Transporte.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateAsync(UsuarioModel usuario)
         {
             try

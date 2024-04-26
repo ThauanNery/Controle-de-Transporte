@@ -50,7 +50,7 @@ namespace Controle_de_Transporte.Controllers
         }
 
         [HttpPost("{instituicaoId}")]
-        public async Task<IActionResult> CreateDepartamento(int instituicaoId, [FromBody] DepartamentoModel departamento)
+        public async Task<IActionResult> CreateAsync(int instituicaoId, [FromBody] DepartamentoModel departamento)
         {
             try
             {
@@ -70,23 +70,7 @@ namespace Controle_de_Transporte.Controllers
             }
         }
 
-
-
-        //[HttpPost]
-        //public async Task<IActionResult> CreateAsync(DepartamentoModel departamento)
-        //{
-        //    try
-        //    {
-        //        var retorno = await _departamentoService.AddAsync(departamento);
-        //        return StatusCode((int)HttpStatusCode.Created, retorno);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
-
-        [HttpPut]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateAsync(DepartamentoModel departamento)
         {
             try
