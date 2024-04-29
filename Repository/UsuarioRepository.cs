@@ -13,6 +13,11 @@ namespace Controle_de_Transporte.Repository
             _context = context;
         }
 
+        public async Task<UsuarioModel> BuscarPorLogin(string login)
+        {
+            return await _context.Usuarios.FirstOrDefaultAsync(u => u.Login.ToUpper() == login.ToUpper());
+
+        }
         public async Task<UsuarioModel> GetByIdAsync(int id)
         {
             return await _context.Usuarios
@@ -76,5 +81,7 @@ namespace Controle_de_Transporte.Repository
             await _context.SaveChangesAsync();
             return true;
         }
+
+        
     }
 }

@@ -16,17 +16,36 @@ namespace Controle_de_Transporte.Service
             _funcionarioRepository = funcionarioRepository;
         }
 
+        public async Task<UsuarioModel> BuscarPorLogin(string login)
+        {
+            var statusHttp = HttpStatusCode.NotFound;
+            try
+            {
+                var usuario = await _repository.BuscarPorLogin(login);
+                if (usuario != null)
+                {
+                    statusHttp = HttpStatusCode.OK;
+                }
+                return usuario;
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = "Ocorreu um erro ao buscar um Usuario por Login.";
+                throw new Exception(errorMessage, ex);
+            }
+        }
+
         public async Task<UsuarioModel> GetByIdAsync(int id)
         {
             var statusHttp = HttpStatusCode.NotFound;
             try
             {
-                var matriculaFuncionario = await _repository.GetByIdAsync(id);
-                if (matriculaFuncionario != null)
+                var usuario = await _repository.GetByIdAsync(id);
+                if (usuario != null)
                 {
                     statusHttp = HttpStatusCode.OK;
                 }
-                return matriculaFuncionario;
+                return usuario;
             }
             catch (Exception ex)
             {
@@ -102,5 +121,7 @@ namespace Controle_de_Transporte.Service
                 throw new Exception(errorMessage, ex);
             }
         }
+
+      
     }
 }

@@ -48,6 +48,24 @@ namespace Controle_de_Transporte.Controllers
         }
 
 
+        [HttpGet("{login}")]
+        public async Task<IActionResult> BuscarPorLogin(string login)
+        {
+            try
+            {
+                var usuario = await _usuarioService.BuscarPorLogin(login);
+                if (usuario == null)
+                {
+                    return NotFound();
+                }
+                return Ok(usuario);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
+            }
+        }
+
         [HttpPost("{funcionarioId}")]
         public async Task<IActionResult> CreateAsync(int funcionarioId, [FromBody] UsuarioModel usuario)
         {
