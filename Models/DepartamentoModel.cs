@@ -12,6 +12,7 @@ namespace Controle_de_Transporte.Models
         public string NomeDepartamento { get; set; }
         public int InstituicaoId { get; set; }
 
+
         [ForeignKey("InstituicaoId")]
         public virtual InstituicaoModel? Instituicao { get; set;}
     }

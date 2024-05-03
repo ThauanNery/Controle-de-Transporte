@@ -40,6 +40,26 @@ namespace Controle_de_Transporte.Data
                 .HasOne(d => d.Funcionarios)
                 .WithMany()
                 .HasForeignKey(d => d.FuncionarioId);
+
+            modelBuilder.Entity<TransporteModel>()
+                .HasOne(d => d.Funcionario)
+                .WithMany()
+                .HasForeignKey(d => d.FuncionarioId); 
+
+            modelBuilder.Entity<TransporteModel>()
+                .HasOne(d => d.TipoDeTransporte)
+                .WithMany()
+                .HasForeignKey(d => d.TipoTransporteId);
+
+            modelBuilder.Entity<TransporteModel>()
+               .HasOne(d => d.MatriculaTransporte)
+               .WithMany()
+               .HasForeignKey(d => d.MatriculaTransporteId);
+            
+            modelBuilder.Entity<TransporteModel>()
+               .HasOne(d => d.Manutencao)
+               .WithMany()
+               .HasForeignKey(d => d.ManutencaoId);
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
