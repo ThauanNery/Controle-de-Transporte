@@ -1,5 +1,4 @@
 ﻿using Controle_de_Transporte.Models;
-using Controle_de_Transporte.Service;
 using Controle_de_Transporte.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -8,13 +7,12 @@ namespace Controle_de_Transporte.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class MatriculaFuncionarioController : ControllerBase
+    public class MatriculaTransporteController : ControllerBase
     {
-
-        private readonly IMatriculaFuncionarioService _matriculaFuncionarioService;
-        public MatriculaFuncionarioController(IMatriculaFuncionarioService matriculaFuncionarioService)
+        private readonly IMatriculaTransporteService _service;
+        public MatriculaTransporteController(IMatriculaTransporteService service)
         {
-            _matriculaFuncionarioService = matriculaFuncionarioService;
+            _service = service;
         }
 
         [HttpGet]
@@ -22,8 +20,8 @@ namespace Controle_de_Transporte.Controllers
         {
             try
             {
-                var cargos = await _matriculaFuncionarioService.GetAllAsync();
-                return Ok(cargos);
+                var matriculas = await _service.GetAllAsync();
+                return Ok(matriculas);
             }
             catch (Exception ex)
             {
@@ -36,12 +34,12 @@ namespace Controle_de_Transporte.Controllers
         {
             try
             {
-                var cargo = await _matriculaFuncionarioService.GetByIdAsync(id);
-                if (cargo == null)
+                var matricula = await _service.GetByIdAsync(id);
+                if (matricula == null)
                 {
                     return NotFound();
                 }
-                return Ok(cargo);
+                return Ok(matricula);
             }
             catch (Exception ex)
             {
@@ -50,35 +48,28 @@ namespace Controle_de_Transporte.Controllers
         }
 
 
-        [HttpPost("{funcionarioId}")]
-        public async Task<IActionResult> CreateAsync(int funcionarioId, [FromBody] MatriculaFuncionarioModel matriculaFuncionario)
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync(MatriculaTransporteModel matricula)
         {
             try
             {
-               
-                var novaMatricula = await _matriculaFuncionarioService.AddAsync(matriculaFuncionario, funcionarioId);
-
-               
-                return CreatedAtAction(nameof(GetByIdAsync), new { id = novaMatricula.Id }, novaMatricula);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(ex.Message);
+                var retorno = await _service.AddAsync(matricula);
+                return StatusCode((int)HttpStatusCode.Created, matricula);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao criar a Matricula.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, new { Erro = ex.Message });
             }
         }
 
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateAsync(MatriculaFuncionarioModel matriculaFuncionario)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateAsync(MatriculaTransporteModel matricula)
         {
             try
             {
-                await _matriculaFuncionarioService.UpdateAsync(matriculaFuncionario);
-                return Ok(matriculaFuncionario);
+                await _service.UpdateAsync(matricula);
+                return Ok(matricula);
             }
             catch (Exception ex)
             {
@@ -91,7 +82,7 @@ namespace Controle_de_Transporte.Controllers
         {
             try
             {
-                await _matriculaFuncionarioService.DeleteAsync(id);
+                await _service.DeleteAsync(id);
                 return Ok();
             }
             catch (Exception ex)
@@ -101,4 +92,3 @@ namespace Controle_de_Transporte.Controllers
         }
     }
 }
-

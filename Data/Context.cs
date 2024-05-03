@@ -12,7 +12,6 @@ namespace Controle_de_Transporte.Data
         public DbSet<InstituicaoModel> Instituicaos { get; set; }
         public DbSet<DepartamentoModel> Departamentos { get; set; }
         public DbSet<CargoModel> Cargos { get; set; }
-        public DbSet<MatriculaFuncionarioModel> matriculaFuncionarios { get; set; }
         public DbSet<UsuarioModel> Usuarios { get; set; }
         public DbSet<FuncionariosModel> Funcionarios { get; set; }
         public DbSet<MatriculaTransporteModel> matriculaTransportes { get; set; }
@@ -27,11 +26,6 @@ namespace Controle_de_Transporte.Data
                 .WithMany()
                 .HasForeignKey(d => d.InstituicaoId);
 
-            modelBuilder.Entity<MatriculaFuncionarioModel>()
-                .HasOne(d => d.Funcionarios)
-                .WithMany()
-                .HasForeignKey(d => d.FuncionarioId);
-            
             modelBuilder.Entity<FuncionariosModel>()
                 .HasOne(d => d.Departamento)
                 .WithMany()
