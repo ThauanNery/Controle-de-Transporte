@@ -59,10 +59,7 @@ namespace Controle_de_Transporte.Controllers
 
                 return CreatedAtAction(nameof(GetByIdAsync), new { id = novaoFuncionario.Id }, novaoFuncionario);
             }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            
             catch (Exception ex)
             {
                 return StatusCode(500, "Ocorreu um erro ao criar um Funcionario.");

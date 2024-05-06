@@ -48,7 +48,7 @@ namespace Controle_de_Transporte.Controllers
         }
 
 
-        [HttpPost("{tipoTransporteId},{funcionarioId},{matriculaTransporteId},{manutencaoId}")]
+        [HttpPost("{tipoTransporteId},{funcionarioId},{matriculaTransporteId}")]
         public async Task<IActionResult> CreateAsync(int tipoTransporteId, int funcionarioId, int matriculaTransporteId, int manutencaoId, [FromBody] TransporteModel transporte)
         {
             try

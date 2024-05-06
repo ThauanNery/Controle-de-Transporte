@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 namespace Controle_de_Transporte.Models
@@ -15,19 +16,15 @@ namespace Controle_de_Transporte.Models
         public DateTime DataInicio { get; set; }
         public DateTime? DataFim { get; set; }
 
-        [NotMapped]
         [ForeignKey("TipoTransporteId")]
-        public virtual TipoDeTransporteModel? TipoDeTransporte { get; set; }
+        public virtual TipoDeTransporteModel? TipoDeTransportes { get; set; }
 
-        [NotMapped]
         [ForeignKey("FuncionarioId")]
         public virtual FuncionariosModel? Funcionario { get; set; }
 
-        [NotMapped]
         [ForeignKey("MatriculaTransporteId")]
         public virtual MatriculaTransporteModel? MatriculaTransporte { get; set; }
 
-        [NotMapped]
         [ForeignKey("ManutencaoId")]
         public virtual ManutencaoModel? Manutencao { get; set; }
     }

@@ -18,7 +18,7 @@ namespace Controle_de_Transporte.Repository
         {
             return await _context.transportes
                 .Include(d => d.MatriculaTransporte)
-                .Include(d => d.TipoDeTransporte)
+                .Include(d => d.TipoDeTransportes)
                 .Include(d => d.Manutencao)
                 .Include(d => d.Funcionario)
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -28,7 +28,7 @@ namespace Controle_de_Transporte.Repository
         {
             return await _context.transportes
                 .Include(d => d.MatriculaTransporte)
-                .Include(d => d.TipoDeTransporte)
+                .Include(d => d.TipoDeTransportes)
                 .Include(d => d.Manutencao)
                 .Include(d => d.Funcionario)
                .ToListAsync();
@@ -58,7 +58,7 @@ namespace Controle_de_Transporte.Repository
                 }
 
                 transporte.Funcionario = funcionario;
-                transporte.TipoDeTransporte = tpTransporte;
+                transporte.TipoDeTransportes = tpTransporte;
                 transporte.MatriculaTransporte = matTransporte;
                 transporte.Manutencao = manutencao;
 
@@ -85,7 +85,7 @@ namespace Controle_de_Transporte.Repository
             }
 
             transporteDb.MatriculaTransporte = transporte.MatriculaTransporte;
-            transporteDb.TipoDeTransporte = transporte.TipoDeTransporte;
+            transporteDb.TipoDeTransportes = transporte.TipoDeTransportes;
             transporteDb.Funcionario = transporte.Funcionario;
             transporteDb.Manutencao = transporte.Manutencao; 
             transporteDb.DataInicio = transporte.DataInicio;
