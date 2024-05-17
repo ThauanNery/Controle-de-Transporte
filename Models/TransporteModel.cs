@@ -17,7 +17,7 @@ namespace Controle_de_Transporte.Models
         public DateTime? DataFim { get; set; }
 
         [ForeignKey("TipoTransporteId")]
-        public virtual TipoDeTransporteModel? TipoDeTransportes { get; set; }
+        public virtual TipoDeTransporteModel? TipoTransportes { get; set; }
 
         [ForeignKey("FuncionarioId")]
         public virtual FuncionariosModel? Funcionario { get; set; }

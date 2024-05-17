@@ -47,7 +47,7 @@ namespace Controle_de_Transporte.Data
                 .HasForeignKey(d => d.FuncionarioId); 
 
             modelBuilder.Entity<TransporteModel>()
-                .HasOne(d => d.TipoDeTransportes)
+                .HasOne(d => d.TipoTransportes)
                 .WithMany()
                 .HasForeignKey(d => d.TipoTransporteId);
 
