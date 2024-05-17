@@ -41,6 +41,8 @@ namespace Controle_de_Transporte
                                     .AllowAnyHeader();
                             });
                     });
+                    services.AddEndpointsApiExplorer();
+
                     services.AddSwaggerGen(c =>
                     {
                         c.SwaggerDoc("v1", new OpenApiInfo
@@ -79,6 +81,7 @@ namespace Controle_de_Transporte
                     app.UseSwaggerUI(c =>
                     {
                         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Minha API V1");
+                        c.RoutePrefix = string.Empty;
                     });
                     app.UseHttpsRedirection();
                     app.UseStaticFiles();
