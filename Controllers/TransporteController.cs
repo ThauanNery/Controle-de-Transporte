@@ -49,12 +49,12 @@ namespace Controle_de_Transporte.Controllers
 
 
         [HttpPost("{tipoTransporteId},{funcionarioId},{matriculaTransporteId}")]
-        public async Task<IActionResult> CreateAsync(int tipoTransporteId, int funcionarioId, int matriculaTransporteId, int manutencaoId, [FromBody] TransporteModel transporte)
+        public async Task<IActionResult> CreateAsync(int tipoTransporteId, int funcionarioId, int matriculaTransporteId, int? manutencaoId, [FromBody] TransporteModel transporte)
         {
             try
             {
 
-                var novoTransporte = await _service.AddAsync(transporte, tipoTransporteId,  funcionarioId,  matriculaTransporteId,  manutencaoId);
+                var novoTransporte = await _service.AddAsync(transporte, tipoTransporteId,  funcionarioId,  matriculaTransporteId, manutencaoId);
 
 
                 return CreatedAtAction(nameof(GetByIdAsync), new { id = novoTransporte.Id }, novoTransporte);

@@ -59,7 +59,9 @@ namespace Controle_de_Transporte.Data
             modelBuilder.Entity<TransporteModel>()
                .HasOne(d => d.Manutencao)
                .WithMany()
-               .HasForeignKey(d => d.ManutencaoId);
+               .HasForeignKey(d => d.ManutencaoId)
+               .IsRequired(false);
+                
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

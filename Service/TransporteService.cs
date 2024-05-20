@@ -55,7 +55,7 @@ namespace Controle_de_Transporte.Service
             }
         }
 
-        public async Task<TransporteModel> AddAsync(TransporteModel transporte, int tipoTransporteId, int funcionarioId, int matriculaTransporteId, int manutencaoId)
+        public async Task<TransporteModel> AddAsync(TransporteModel transporte, int tipoTransporteId, int funcionarioId, int matriculaTransporteId, int? manutencaoId)
         {
             try
             {
@@ -63,7 +63,8 @@ namespace Controle_de_Transporte.Service
                 var funcionario = await _funcRepository.GetByIdAsync(funcionarioId);
                 var tpTransporte = await _tpTranspRepository.GetByIdAsync(tipoTransporteId);
                 var matTransporte = await _matTranspRepository.GetByIdAsync(matriculaTransporteId);
-                var manutencao = await _manuRepository.GetByIdAsync(manutencaoId);
+                var manutencao = manutencaoId.HasValue ? await _manuRepository.GetByIdAsync(manutencaoId.Value) : null;
+
 
 
                 if (funcionario == null)
