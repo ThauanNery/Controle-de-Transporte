@@ -84,10 +84,10 @@ namespace Controle_de_Transporte.Repository
                 throw new Exception("Houve um erro na atualização do Transporte!");
             }
 
-            transporteDb.MatriculaTransporte = transporte.MatriculaTransporte;
-            transporteDb.TipoTransportes = transporte.TipoTransportes;
-            transporteDb.Funcionario = transporte.Funcionario;
-            transporteDb.Manutencao = transporte.Manutencao; 
+            transporteDb.MatriculaTransporteId = transporte.MatriculaTransporteId;
+            transporteDb.TipoTransporteId = transporte.TipoTransporteId;
+            transporteDb.FuncionarioId = transporte.FuncionarioId;
+            transporteDb.ManutencaoId = transporte.ManutencaoId; 
             transporteDb.DataInicio = transporte.DataInicio;
             transporteDb.DataFim = transporte.DataFim;
 

@@ -72,28 +72,6 @@ namespace Controle_de_Transporte.Controllers
         }
 
 
-        //[HttpPost("{tipoTransporteId},{funcionarioId},{matriculaTransporteId}")]
-        //public async Task<IActionResult> CreateAsync(int tipoTransporteId, int funcionarioId, int matriculaTransporteId, int? manutencaoId, [FromBody] TransporteModel transporte)
-        //{
-        //    try
-        //    {
-
-        //        var novoTransporte = await _service.AddAsync(transporte, tipoTransporteId,  funcionarioId,  matriculaTransporteId, manutencaoId);
-
-
-        //        return CreatedAtAction(nameof(GetByIdAsync), new { id = novoTransporte.Id }, novoTransporte);
-        //    }
-        //    catch (InvalidOperationException ex)
-        //    {
-        //        return NotFound(ex.Message);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, "Ocorreu um erro ao criar um transporte.");
-        //    }
-        //}
-
-
         [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateAsync(TransporteModel transporte)
         {

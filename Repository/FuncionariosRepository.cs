@@ -68,8 +68,8 @@ namespace Controle_de_Transporte.Repository
 
             FuncionarioDb.NomeFuncionario = funcionario.NomeFuncionario;
             FuncionarioDb.Matricula = funcionario.Matricula;
-            FuncionarioDb.Cargo = funcionario.Cargo;
-            FuncionarioDb.Departamento = funcionario.Departamento;
+            FuncionarioDb.CargoId = funcionario.CargoId;
+            FuncionarioDb.DepartamentoId = funcionario.DepartamentoId;
 
             _context.Funcionarios.Update(FuncionarioDb);
             await _context.SaveChangesAsync();
